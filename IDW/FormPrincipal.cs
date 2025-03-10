@@ -124,6 +124,17 @@ namespace IDW
 
             }
         }
+        void LiberaBotaoPoligono()
+        {
+            if ((valoresAdiconados.Count()) < 2)
+            {
+                btnCriarGrafico.Enabled = false;
+            }
+            else
+            {
+                btnCriarGrafico.Enabled = true;
+            }
+        }
         void CriaGrafico()
         {
             //Painel.Plot.Clear();
@@ -234,6 +245,10 @@ namespace IDW
                         }
                     }
                 }
+                else
+                {
+                    return;
+                }
             }
             CriaPontos();
             CriaGrafico();
@@ -270,6 +285,7 @@ namespace IDW
                 }
 
             }
+            LiberaBotaoPoligono();
         }
 
         //Form Load
@@ -297,7 +313,7 @@ namespace IDW
 
             PainelPrincipal.Refresh();
 
-
+            LiberaBotaoPoligono();
 
 
         }

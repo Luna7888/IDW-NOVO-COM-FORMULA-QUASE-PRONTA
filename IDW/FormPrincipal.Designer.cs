@@ -64,7 +64,7 @@ namespace IDW
             menuAdicionar.Items.AddRange(new ToolStripItem[] { adicionarToolStripMenuItem });
             menuAdicionar.Location = new Point(0, 0);
             menuAdicionar.Name = "menuAdicionar";
-            menuAdicionar.Size = new Size(1119, 24);
+            menuAdicionar.Size = new Size(1146, 24);
             menuAdicionar.TabIndex = 17;
             menuAdicionar.Text = "menuStrip1";
             // 
@@ -109,9 +109,10 @@ namespace IDW
             gpAdicionandoValores.Controls.Add(btnEnviarValores);
             gpAdicionandoValores.Controls.Add(lblEixoX);
             gpAdicionandoValores.Controls.Add(lblEixoY);
-            gpAdicionandoValores.Location = new Point(4, 31);
+            gpAdicionandoValores.Dock = DockStyle.Top;
+            gpAdicionandoValores.Location = new Point(0, 0);
             gpAdicionandoValores.Name = "gpAdicionandoValores";
-            gpAdicionandoValores.Size = new Size(403, 419);
+            gpAdicionandoValores.Size = new Size(410, 453);
             gpAdicionandoValores.TabIndex = 14;
             gpAdicionandoValores.TabStop = false;
             gpAdicionandoValores.Text = "Adicionando Valores";
@@ -224,15 +225,15 @@ namespace IDW
             PainelPrincipal.Dock = DockStyle.Fill;
             PainelPrincipal.Location = new Point(0, 0);
             PainelPrincipal.Name = "PainelPrincipal";
-            PainelPrincipal.Size = new Size(709, 531);
+            PainelPrincipal.Size = new Size(736, 586);
             PainelPrincipal.TabIndex = 1;
             // 
             // btnCriarGrafico
             // 
-            btnCriarGrafico.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
-            btnCriarGrafico.Location = new Point(0, 456);
+            btnCriarGrafico.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
+            btnCriarGrafico.Location = new Point(0, 459);
             btnCriarGrafico.Name = "btnCriarGrafico";
-            btnCriarGrafico.Size = new Size(410, 75);
+            btnCriarGrafico.Size = new Size(410, 127);
             btnCriarGrafico.TabIndex = 15;
             btnCriarGrafico.Text = "Criar Gráfico";
             btnCriarGrafico.UseVisualStyleBackColor = true;
@@ -243,9 +244,9 @@ namespace IDW
             panel1.Controls.Add(gpAdicionandoValores);
             panel1.Controls.Add(btnCriarGrafico);
             panel1.Dock = DockStyle.Right;
-            panel1.Location = new Point(709, 24);
+            panel1.Location = new Point(736, 24);
             panel1.Name = "panel1";
-            panel1.Size = new Size(410, 531);
+            panel1.Size = new Size(410, 586);
             panel1.TabIndex = 18;
             // 
             // panel2
@@ -254,14 +255,14 @@ namespace IDW
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(0, 24);
             panel2.Name = "panel2";
-            panel2.Size = new Size(709, 531);
+            panel2.Size = new Size(736, 586);
             panel2.TabIndex = 19;
             // 
             // FormPrincipal
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1119, 555);
+            ClientSize = new Size(1146, 610);
             Controls.Add(panel2);
             Controls.Add(panel1);
             Controls.Add(menuAdicionar);

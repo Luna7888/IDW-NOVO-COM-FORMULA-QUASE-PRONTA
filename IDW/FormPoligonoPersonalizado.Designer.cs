@@ -37,16 +37,22 @@
             lblEixoX = new Label();
             lblEixoY = new Label();
             btnEnviaPoligono = new Button();
+            panel1 = new Panel();
+            panel2 = new Panel();
+            panel3 = new Panel();
             gpAdicionandoValores.SuspendLayout();
+            panel2.SuspendLayout();
+            panel3.SuspendLayout();
             SuspendLayout();
             // 
             // Painel
             // 
             Painel.BackColor = SystemColors.Control;
             Painel.DisplayScale = 1F;
-            Painel.Location = new Point(12, 12);
+            Painel.Dock = DockStyle.Fill;
+            Painel.Location = new Point(0, 0);
             Painel.Name = "Painel";
-            Painel.Size = new Size(502, 435);
+            Painel.Size = new Size(627, 576);
             Painel.TabIndex = 2;
             // 
             // gpAdicionandoValores
@@ -57,9 +63,10 @@
             gpAdicionandoValores.Controls.Add(btnEnviarValores);
             gpAdicionandoValores.Controls.Add(lblEixoX);
             gpAdicionandoValores.Controls.Add(lblEixoY);
-            gpAdicionandoValores.Location = new Point(520, 30);
+            gpAdicionandoValores.Dock = DockStyle.Top;
+            gpAdicionandoValores.Location = new Point(0, 0);
             gpAdicionandoValores.Name = "gpAdicionandoValores";
-            gpAdicionandoValores.Size = new Size(349, 310);
+            gpAdicionandoValores.Size = new Size(362, 310);
             gpAdicionandoValores.TabIndex = 15;
             gpAdicionandoValores.TabStop = false;
             gpAdicionandoValores.Text = "Adicionando Valores";
@@ -121,27 +128,56 @@
             // 
             // btnEnviaPoligono
             // 
-            btnEnviaPoligono.Location = new Point(520, 351);
+            btnEnviaPoligono.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
+            btnEnviaPoligono.Location = new Point(3, 330);
             btnEnviaPoligono.Name = "btnEnviaPoligono";
-            btnEnviaPoligono.Size = new Size(349, 80);
+            btnEnviaPoligono.Size = new Size(356, 243);
             btnEnviaPoligono.TabIndex = 16;
             btnEnviaPoligono.Text = "Enviar para o Plano";
             btnEnviaPoligono.UseVisualStyleBackColor = true;
             btnEnviaPoligono.Click += btnEnviaPoligono_Click;
             // 
+            // panel1
+            // 
+            panel1.Location = new Point(663, 714);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(200, 100);
+            panel1.TabIndex = 17;
+            // 
+            // panel2
+            // 
+            panel2.Controls.Add(gpAdicionandoValores);
+            panel2.Controls.Add(btnEnviaPoligono);
+            panel2.Dock = DockStyle.Right;
+            panel2.Location = new Point(627, 0);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(362, 576);
+            panel2.TabIndex = 18;
+            // 
+            // panel3
+            // 
+            panel3.Controls.Add(Painel);
+            panel3.Dock = DockStyle.Fill;
+            panel3.Location = new Point(0, 0);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(627, 576);
+            panel3.TabIndex = 19;
+            // 
             // FormPoligonoPersonalizado
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(881, 450);
-            Controls.Add(btnEnviaPoligono);
-            Controls.Add(gpAdicionandoValores);
-            Controls.Add(Painel);
+            ClientSize = new Size(989, 576);
+            Controls.Add(panel3);
+            Controls.Add(panel2);
+            Controls.Add(panel1);
             Name = "FormPoligonoPersonalizado";
             Text = "FormPoligonoPersonalizado";
             Load += FormPoligonoPersonalizado_Load;
             gpAdicionandoValores.ResumeLayout(false);
             gpAdicionandoValores.PerformLayout();
+            panel2.ResumeLayout(false);
+            panel3.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -156,5 +192,8 @@
         private Label lblEixoX;
         private Label lblEixoY;
         private Button btnEnviaPoligono;
+        private Panel panel1;
+        private Panel panel2;
+        private Panel panel3;
     }
 }

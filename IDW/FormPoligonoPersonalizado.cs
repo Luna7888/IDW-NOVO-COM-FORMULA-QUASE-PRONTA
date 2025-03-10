@@ -52,6 +52,18 @@ namespace IDW
             Painel.Refresh();
         }
 
+        void LiberaBotaoPoligono()
+        {
+            if ((PoligonoX_Individual.Count()) < 3)
+            {
+                btnEnviaPoligono.Enabled = false;
+            }
+            else
+            {
+                btnEnviaPoligono.Enabled = true;
+            }
+        }
+
         private void PreencheListView(ListView listview, string nome, string x, string y)
         {
             ListViewItem item = new ListViewItem(new[] { nome, x, y });
@@ -91,6 +103,9 @@ namespace IDW
                 }
             }
             GeraPoligono();
+
+            //Deixar nao clicavel antes que a lista tenha no minimo 3
+            LiberaBotaoPoligono();
         }
 
         private void FormPoligonoPersonalizado_Load(object sender, EventArgs e)
@@ -100,6 +115,8 @@ namespace IDW
             lsvValoresAdicionados.Columns.Add("Nome", 111, System.Windows.Forms.HorizontalAlignment.Center);
             lsvValoresAdicionados.Columns.Add("X", 111, System.Windows.Forms.HorizontalAlignment.Center);
             lsvValoresAdicionados.Columns.Add("Y", 111, System.Windows.Forms.HorizontalAlignment.Center);
+
+            LiberaBotaoPoligono();
         }
 
         private void btnEnviaPoligono_Click(object sender, EventArgs e)
@@ -127,6 +144,7 @@ namespace IDW
 
             _principal.GetInfo(PoligonoX_Individual, PoligonoY_Individual);
             _principal.AtualizaPainel();
+
         }
 
         private void txbEixoX_KeyPress(object sender, KeyPressEventArgs e)
@@ -137,6 +155,11 @@ namespace IDW
         private void txbEixoY_KeyPress(object sender, KeyPressEventArgs e)
         {
             Key.IntNumber_Ponto(e, sender);
+        }
+
+        private void panel3_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
