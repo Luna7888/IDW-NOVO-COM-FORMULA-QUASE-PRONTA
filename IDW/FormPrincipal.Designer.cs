@@ -35,7 +35,6 @@ namespace IDW
             menuAdicionar = new MenuStrip();
             adicionarToolStripMenuItem = new ToolStripMenuItem();
             planoToolStripMenuItem = new ToolStripMenuItem();
-            triânguloToolStripMenuItem = new ToolStripMenuItem();
             personalizadoToolStripMenuItem = new ToolStripMenuItem();
             gpAdicionandoValores = new GroupBox();
             txbPeso = new TextBox();
@@ -77,17 +76,10 @@ namespace IDW
             // 
             // planoToolStripMenuItem
             // 
-            planoToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { triânguloToolStripMenuItem, personalizadoToolStripMenuItem });
+            planoToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { personalizadoToolStripMenuItem });
             planoToolStripMenuItem.Name = "planoToolStripMenuItem";
             planoToolStripMenuItem.Size = new Size(104, 22);
             planoToolStripMenuItem.Text = "Plano";
-            // 
-            // triânguloToolStripMenuItem
-            // 
-            triânguloToolStripMenuItem.Name = "triânguloToolStripMenuItem";
-            triânguloToolStripMenuItem.Size = new Size(147, 22);
-            triânguloToolStripMenuItem.Text = "Triângulo";
-            triânguloToolStripMenuItem.Click += triânguloToolStripMenuItem_Click;
             // 
             // personalizadoToolStripMenuItem
             // 
@@ -119,6 +111,7 @@ namespace IDW
             // 
             // txbPeso
             // 
+            txbPeso.Enabled = false;
             txbPeso.Location = new Point(147, 374);
             txbPeso.MaximumSize = new Size(1000, 0);
             txbPeso.Name = "txbPeso";
@@ -137,6 +130,7 @@ namespace IDW
             // 
             // txbEixoX
             // 
+            txbEixoX.Enabled = false;
             txbEixoX.Location = new Point(22, 279);
             txbEixoX.Name = "txbEixoX";
             txbEixoX.Size = new Size(94, 23);
@@ -145,6 +139,7 @@ namespace IDW
             // 
             // txbEixoY
             // 
+            txbEixoY.Enabled = false;
             txbEixoY.Location = new Point(150, 279);
             txbEixoY.Name = "txbEixoY";
             txbEixoY.Size = new Size(94, 23);
@@ -153,6 +148,7 @@ namespace IDW
             // 
             // txbIntensidade
             // 
+            txbIntensidade.Enabled = false;
             txbIntensidade.Location = new Point(288, 279);
             txbIntensidade.Name = "txbIntensidade";
             txbIntensidade.Size = new Size(94, 23);
@@ -161,6 +157,7 @@ namespace IDW
             // 
             // btnCarregaCSV
             // 
+            btnCarregaCSV.Enabled = false;
             btnCarregaCSV.Location = new Point(283, 27);
             btnCarregaCSV.Name = "btnCarregaCSV";
             btnCarregaCSV.Size = new Size(99, 23);
@@ -192,6 +189,7 @@ namespace IDW
             // 
             // btnEnviarValores
             // 
+            btnEnviarValores.Enabled = false;
             btnEnviarValores.Location = new Point(22, 308);
             btnEnviarValores.Name = "btnEnviarValores";
             btnEnviarValores.Size = new Size(360, 23);
@@ -284,7 +282,6 @@ namespace IDW
         private MenuStrip menuAdicionar;
         private ToolStripMenuItem adicionarToolStripMenuItem;
         private ToolStripMenuItem planoToolStripMenuItem;
-        private ToolStripMenuItem triânguloToolStripMenuItem;
         private ToolStripMenuItem personalizadoToolStripMenuItem;
         private GroupBox gpAdicionandoValores;
         private Label lblPeso;

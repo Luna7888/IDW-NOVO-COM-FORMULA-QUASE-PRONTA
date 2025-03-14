@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="ScottPlot" Version="5.0.54" />
     <PackageReference Include="ScottPlot.WinForms" Version="5.0.54" />
   </ItemGroup>
 

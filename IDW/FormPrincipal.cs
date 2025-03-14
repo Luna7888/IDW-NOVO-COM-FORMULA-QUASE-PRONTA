@@ -30,6 +30,8 @@ namespace IDW
 
         private bool temPlanoPersonalizado = false;
 
+        private ColorBar _colorBar;
+
         Ponto PontoA = new(25, 25, 80);
         Ponto PontoB = new(75, 25, 10);
         Ponto PontoC = new(75, 75, 10);
@@ -51,10 +53,12 @@ namespace IDW
         }
         void Interpolate(double[,] mapa, List<Ponto> listaponto)
         {
+            int j = mapa.GetLength(0);
+            int h = mapa.GetLength(1);
             //Organizando  formula para ter valores nao pré definidos
-            for (int y = 0; y < mapa.GetLength(0); y++)
+            for (int y = 0; y < j; y++)
             {
-                for (int x = 0; x < mapa.GetLength(1); x++)
+                for (int x = 0; x < h; x++)
                 {
                     foreach (var ponto in listaponto)
                     {
@@ -88,41 +92,37 @@ namespace IDW
                 }
             }
 
+            if(_colorBar != null)
+            {
+                PainelPrincipal.Plot.Remove(_colorBar);
+            }
             Heatmap hm = PainelPrincipal.Plot.Add.Heatmap(Mapa);
             hm.Colormap = new Turbo();
-            AtualizaPainel();
+            hm.Smooth = true;
+            _colorBar = PainelPrincipal.Plot.Add.ColorBar(hm);
+            PainelPrincipal.Refresh();
 
+            CortaPlano();
 
-
-
-
-            double[] xs = { 50, 60, 70, 99.5, 99.5, -0.5, -0.5, 99.5, 99.5 };  //(-0.5,-0.5,99.5,-0.5) x inicio x final   igual o pygame
-            double[] ys = { 30, 50, 30, -0.5, 99.5, 99.5, -0.5, -0.5, 30 }; //(-0.5,-0.5,-0.5,99.5) y inicio y final
-
-            //var poligono = Painel.Plot.Add.Polygon(xs, ys);
-            //poligono.LineWidth = 10;
-            //poligono.LineColor = Colors.Blue;
-            //poligono.FillColor = Colors.Blue;
-
-            //hm.Smooth = true;
-
-            //Painel.Plot.Add.ColorBar(hm);
-            //ColorBar cb = new(hm);
-
-            //RemoveCB(cb);
-            //criar uma função que resgata o mapa atualizado
-
-            //TALVES DA PRA COLOCAR UM REMOVE AIIIIIIII PAINEL.REMOVE(CB)
         }
         void CriaPontos()
         {
             ListaPonto.Clear();
             foreach (var ponto in valoresAdiconados)
             {
-                Ponto novoPonto = new Ponto((int)ponto[0], (int)ponto[1], ponto[2]);
+                Ponto novoPonto = new Ponto((int)ponto[0], Math.Abs((int)PoligonoY.Max<double>() - (int)ponto[1]), ponto[2]);
                 ListaPonto.Add(novoPonto);
 
             }
+        }
+        void CortaPlano()
+        {
+            var p = PainelPrincipal.Plot.Add.Polygon(PoligonoX, PoligonoY);
+            p.LineWidth = 2;
+            p.LineColor = Colors.White;
+            p.FillColor = Colors.White;
+
+            PainelPrincipal.Refresh();
         }
         void LiberaBotaoPoligono()
         {
@@ -135,10 +135,27 @@ namespace IDW
                 btnCriarGrafico.Enabled = true;
             }
         }
+        void LiberaObjetosDisabled()
+        {
+            btnCarregaCSV.Enabled = true;
+            btnEnviarValores.Enabled = true;
+            txbEixoX.Enabled = true;
+            txbEixoY.Enabled = true;
+            txbIntensidade.Enabled = true;
+            txbPeso.Enabled = true;
+        }
         void CriaGrafico()
         {
-            //Painel.Plot.Clear();
-            Mapa = new double[TamanhoMapaX, TamanhoMapaY];
+            PainelPrincipal.Plot.Clear();
+
+            if (PoligonoX.Count() > 0)
+            {
+                Mapa = new double[(int)Math.Round(PoligonoY.Max<double>()), (int)Math.Round(PoligonoX.Max<double>())];
+            }
+            else
+            {
+                Mapa = new double[100, 100];
+            }
             Interpolate(Mapa, ListaPonto);
 
             //interpolar2(Mapa,PontoA,  PontoB,  PontoC, PontoD);
@@ -167,15 +184,23 @@ namespace IDW
         }
         public void AtualizaPainel()
         {
-            PainelPrincipal.Plot.Clear();
+            //PainelPrincipal.Plot.Clear();
+            if (PoligonoX.Count > 0)
+            {
+                Mapa = new double[(int)Math.Round(PoligonoY.Max<double>()), (int)Math.Round(PoligonoX.Max<double>())];
+            }
+
             Heatmap hm = PainelPrincipal.Plot.Add.Heatmap(Mapa);
 
             var p = PainelPrincipal.Plot.Add.Polygon(PoligonoX, PoligonoY);
-            p.LineWidth = 1;
+            p.LineWidth = 2;
             p.LineColor = Colors.White;
             p.FillColor = Colors.White;
 
             PainelPrincipal.Refresh();
+            resetaListViewPrincipal();
+
+            LiberaObjetosDisabled();
         }
 
 
@@ -263,26 +288,22 @@ namespace IDW
             }
             else
             {
-                if (Int32.Parse(txbEixoX.Text) > 99 || Int32.Parse(txbEixoY.Text) > 99 || Int32.Parse(txbEixoX.Text) < 0 || Int32.Parse(txbEixoY.Text) < 0)
-                {
-                    MessageBox.Show("X ou Y maiores que 99 ou menores que 0");
-                }
-                else
-                {
-                    valoresAdiconados.Add([Int32.Parse(txbEixoX.Text), Int32.Parse(txbEixoY.Text), Double.Parse(txbIntensidade.Text, CultureInfo.InvariantCulture)]);
 
-                    txbEixoX.Text = "";
-                    txbEixoY.Text = "";
-                    txbIntensidade.Text = "";
-                    lsvValoresAdicionados.Items.Clear();
 
-                    indexValoresAdicionados = 0;
-                    foreach (var values in valoresAdiconados)
-                    {
-                        indexValoresAdicionados++;
-                        PreencheListView(lsvValoresAdicionados, $"Ponto {indexValoresAdicionados}", values[0].ToString(), values[1].ToString(), values[2].ToString());
-                    }
+                valoresAdiconados.Add([Int32.Parse(txbEixoX.Text), Int32.Parse(txbEixoY.Text), Double.Parse(txbIntensidade.Text, CultureInfo.InvariantCulture)]);
+
+                txbEixoX.Text = "";
+                txbEixoY.Text = "";
+                txbIntensidade.Text = "";
+                lsvValoresAdicionados.Items.Clear();
+
+                indexValoresAdicionados = 0;
+                foreach (var values in valoresAdiconados)
+                {
+                    indexValoresAdicionados++;
+                    PreencheListView(lsvValoresAdicionados, $"Ponto {indexValoresAdicionados}", values[0].ToString(), values[1].ToString(), values[2].ToString());
                 }
+
 
             }
             LiberaBotaoPoligono();
@@ -292,24 +313,6 @@ namespace IDW
         private void Form1_Load(object sender, EventArgs e)
         {
             resetaListViewPrincipal();
-
-
-
-            Heatmap hm = PainelPrincipal.Plot.Add.Heatmap(Mapa);
-
-            // hm.Position = new(0, 100, 0, 100);
-            //hm.Colormap = new Turbo();
-            //Painel.Plot.Add.Heatmap(Mapa);
-            //Painel.Plot.Add.ColorBar(hm);
-
-
-            //var poligono = Painel.Plot.Add.Polygon(xs, ys);
-            // poligono.LineWidth = 0;
-            //poligono.LineColor = Colors.Blue;
-            // poligono.FillColor = Colors.Purple;
-
-            // atualiza o gráfico
-
 
             PainelPrincipal.Refresh();
 
@@ -324,22 +327,6 @@ namespace IDW
             FormPoligonoPersonalizado FormPersonalizadoInstancia = new(this);
 
             FormPersonalizadoInstancia.Show();
-        }
-
-        private void triânguloToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            PainelPrincipal.Plot.Clear();
-            Heatmap hm = PainelPrincipal.Plot.Add.Heatmap(Mapa);
-
-            PoligonoX = new List<double>() { -0.5, 49.75, 99.5, 99.5, -0.5 };  // x inicio x final   igual o pygame
-            PoligonoY = new List<double>() { -0.5, 99.5, -0.5, 99.5, 99.5 }; // y inicio y final
-
-            var poligono = PainelPrincipal.Plot.Add.Polygon(PoligonoX, PoligonoY);
-            poligono.LineWidth = 1;
-            poligono.LineColor = Colors.White;
-            poligono.FillColor = Colors.White;
-
-            PainelPrincipal.Refresh();
         }
 
     }

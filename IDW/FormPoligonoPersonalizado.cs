@@ -1,16 +1,6 @@
 ﻿using ScottPlot;
 using ScottPlot.Plottables;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using static System.Windows.Forms.DataFormats;
 
 namespace IDW
 {
@@ -38,7 +28,7 @@ namespace IDW
         void GeraPoligono()
         {
             Painel.Plot.Clear();
-            Heatmap hm = Painel.Plot.Add.Heatmap(Mapa);
+
 
             double[] xs = { 1, 50, 100, 100, 0 };
             double[] ys = { 1, 100, 0, 100, 100 };
@@ -51,7 +41,13 @@ namespace IDW
 
             Painel.Refresh();
         }
-
+        void resetaListViewPrincipal()
+        {
+            lsvValoresAdicionados.Clear();
+            lsvValoresAdicionados.Columns.Add("Nome", 111, System.Windows.Forms.HorizontalAlignment.Center);
+            lsvValoresAdicionados.Columns.Add("X", 111, System.Windows.Forms.HorizontalAlignment.Center);
+            lsvValoresAdicionados.Columns.Add("Y", 111, System.Windows.Forms.HorizontalAlignment.Center);
+        }
         void LiberaBotaoPoligono()
         {
             if ((PoligonoX_Individual.Count()) < 3)
@@ -78,29 +74,23 @@ namespace IDW
             }
             else
             {
-                if (Double.Parse(txbEixoX.Text, CultureInfo.InvariantCulture) > 100 || Double.Parse(txbEixoY.Text, CultureInfo.InvariantCulture) > 100 ||
-                    Double.Parse(txbEixoX.Text, CultureInfo.InvariantCulture) < 0 || Double.Parse(txbEixoY.Text, CultureInfo.InvariantCulture) < 0)
+
+                valoresAdiconados.Add([Double.Parse(txbEixoX.Text, CultureInfo.InvariantCulture), Double.Parse(txbEixoY.Text, CultureInfo.InvariantCulture)]);
+                PoligonoX_Individual.Add(Double.Parse(txbEixoX.Text, CultureInfo.InvariantCulture));
+                PoligonoY_Individual.Add(Double.Parse(txbEixoY.Text, CultureInfo.InvariantCulture));
+
+                txbEixoX.Text = "";
+                txbEixoY.Text = "";
+                lsvValoresAdicionados.Items.Clear();
+
+                indexValoresAdicionados = 0;
+                foreach (var values in valoresAdiconados)
                 {
-                    MessageBox.Show("X ou Y maiores que 100 ou menores que 0");
+                    indexValoresAdicionados++;
+                    PreencheListView(lsvValoresAdicionados, $"Ponto {indexValoresAdicionados}", values[0].ToString(), values[1].ToString());
                 }
-                else
-                {
-                    valoresAdiconados.Add([Double.Parse(txbEixoX.Text, CultureInfo.InvariantCulture), Double.Parse(txbEixoY.Text, CultureInfo.InvariantCulture)]);
-                    PoligonoX_Individual.Add(Double.Parse(txbEixoX.Text, CultureInfo.InvariantCulture));
-                    PoligonoY_Individual.Add(Double.Parse(txbEixoY.Text, CultureInfo.InvariantCulture));
 
-                    txbEixoX.Text = "";
-                    txbEixoY.Text = "";
-                    lsvValoresAdicionados.Items.Clear();
 
-                    indexValoresAdicionados = 0;
-                    foreach (var values in valoresAdiconados)
-                    {
-                        indexValoresAdicionados++;
-                        PreencheListView(lsvValoresAdicionados, $"Ponto {indexValoresAdicionados}", values[0].ToString(), values[1].ToString());
-                    }
-
-                }
             }
             GeraPoligono();
 
@@ -110,7 +100,7 @@ namespace IDW
 
         private void FormPoligonoPersonalizado_Load(object sender, EventArgs e)
         {
-            Heatmap hm = Painel.Plot.Add.Heatmap(Mapa);
+
 
             lsvValoresAdicionados.Columns.Add("Nome", 111, System.Windows.Forms.HorizontalAlignment.Center);
             lsvValoresAdicionados.Columns.Add("X", 111, System.Windows.Forms.HorizontalAlignment.Center);
@@ -127,18 +117,18 @@ namespace IDW
             qnttPontos = PoligonoX_Individual.Count();
 
             PoligonoX_Individual.Add(0);
-            PoligonoX_Individual.Add(100);
-            PoligonoX_Individual.Add(100);
+            PoligonoX_Individual.Add(PoligonoX_Individual.Max<double>());
+            PoligonoX_Individual.Add(PoligonoX_Individual.Max<double>());
             PoligonoX_Individual.Add(0);
             PoligonoX_Individual.Add(0);
             PoligonoX_Individual.Add(PoligonoX_Individual[qnttPontos - 1]);
 
 
-            PoligonoY_Individual.Add(100);
-            PoligonoY_Individual.Add(100);
+            PoligonoY_Individual.Add(PoligonoY_Individual.Max<double>());
+            PoligonoY_Individual.Add(PoligonoY_Individual.Max<double>());
             PoligonoY_Individual.Add(0);
             PoligonoY_Individual.Add(0);
-            PoligonoY_Individual.Add(100);
+            PoligonoY_Individual.Add(PoligonoY_Individual.Max<double>());
             PoligonoY_Individual.Add(PoligonoY_Individual[qnttPontos - 1]);
 
 
@@ -161,5 +151,58 @@ namespace IDW
         {
 
         }
+
+        private void btnCarregarCSV_Click(object sender, EventArgs e)
+        {
+            valoresAdiconados.Clear();
+            PoligonoX_Individual.Clear();
+            PoligonoY_Individual.Clear();
+            resetaListViewPrincipal();
+
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.InitialDirectory = "c:\\";
+                openFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+                openFileDialog.FilterIndex = 2;
+                openFileDialog.RestoreDirectory = true;
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    //Get the path of specified file
+                    var filePath = openFileDialog.OpenFile();
+
+
+                    using (StreamReader sr = new StreamReader(filePath))
+                    {
+
+
+                        //talvez apagar o conteudo que esta na lista valores
+                        while (!sr.EndOfStream)
+                        {
+                            string linha = sr.ReadLine(); // lê uma linha do csv
+                            string[] valores = linha.Split(';'); // divide pelos separadores
+
+                            valoresAdiconados.Add([Int32.Parse(valores[0]), Int32.Parse(valores[1])]);
+                            PoligonoX_Individual.Add(Double.Parse(valores[0], CultureInfo.InvariantCulture));
+                            PoligonoY_Individual.Add(Double.Parse(valores[1], CultureInfo.InvariantCulture));
+                        }
+                        indexValoresAdicionados = 0;
+
+                        foreach (var values in valoresAdiconados)
+                        {
+                            indexValoresAdicionados++;
+                            PreencheListView(lsvValoresAdicionados, $"Ponto {indexValoresAdicionados}", values[0].ToString(), values[1].ToString());
+                        }
+                    }
+                }
+                else
+                {
+                    return;
+                }
+            }
+            GeraPoligono();
+            LiberaBotaoPoligono();
+        }
+
     }
 }

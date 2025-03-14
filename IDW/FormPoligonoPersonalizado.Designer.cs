@@ -30,6 +30,7 @@
         {
             Painel = new ScottPlot.WinForms.FormsPlot();
             gpAdicionandoValores = new GroupBox();
+            btnCarregarCSV = new Button();
             lsvValoresAdicionados = new ListView();
             txbEixoX = new TextBox();
             txbEixoY = new TextBox();
@@ -52,11 +53,12 @@
             Painel.Dock = DockStyle.Fill;
             Painel.Location = new Point(0, 0);
             Painel.Name = "Painel";
-            Painel.Size = new Size(627, 576);
+            Painel.Size = new Size(654, 584);
             Painel.TabIndex = 2;
             // 
             // gpAdicionandoValores
             // 
+            gpAdicionandoValores.Controls.Add(btnCarregarCSV);
             gpAdicionandoValores.Controls.Add(lsvValoresAdicionados);
             gpAdicionandoValores.Controls.Add(txbEixoX);
             gpAdicionandoValores.Controls.Add(txbEixoY);
@@ -66,16 +68,26 @@
             gpAdicionandoValores.Dock = DockStyle.Top;
             gpAdicionandoValores.Location = new Point(0, 0);
             gpAdicionandoValores.Name = "gpAdicionandoValores";
-            gpAdicionandoValores.Size = new Size(362, 310);
+            gpAdicionandoValores.Size = new Size(362, 375);
             gpAdicionandoValores.TabIndex = 15;
             gpAdicionandoValores.TabStop = false;
             gpAdicionandoValores.Text = "Adicionando Valores";
+            // 
+            // btnCarregarCSV
+            // 
+            btnCarregarCSV.Location = new Point(257, 22);
+            btnCarregarCSV.Name = "btnCarregarCSV";
+            btnCarregarCSV.Size = new Size(86, 23);
+            btnCarregarCSV.TabIndex = 15;
+            btnCarregarCSV.Text = "Carregar";
+            btnCarregarCSV.UseVisualStyleBackColor = true;
+            btnCarregarCSV.Click += btnCarregarCSV_Click;
             // 
             // lsvValoresAdicionados
             // 
             lsvValoresAdicionados.GridLines = true;
             lsvValoresAdicionados.LabelEdit = true;
-            lsvValoresAdicionados.Location = new Point(8, 22);
+            lsvValoresAdicionados.Location = new Point(8, 58);
             lsvValoresAdicionados.Name = "lsvValoresAdicionados";
             lsvValoresAdicionados.Size = new Size(335, 189);
             lsvValoresAdicionados.TabIndex = 14;
@@ -84,7 +96,7 @@
             // 
             // txbEixoX
             // 
-            txbEixoX.Location = new Point(48, 234);
+            txbEixoX.Location = new Point(48, 283);
             txbEixoX.Name = "txbEixoX";
             txbEixoX.Size = new Size(89, 23);
             txbEixoX.TabIndex = 10;
@@ -92,7 +104,7 @@
             // 
             // txbEixoY
             // 
-            txbEixoY.Location = new Point(207, 234);
+            txbEixoY.Location = new Point(207, 283);
             txbEixoY.Name = "txbEixoY";
             txbEixoY.Size = new Size(89, 23);
             txbEixoY.TabIndex = 11;
@@ -100,7 +112,7 @@
             // 
             // btnEnviarValores
             // 
-            btnEnviarValores.Location = new Point(48, 263);
+            btnEnviarValores.Location = new Point(48, 312);
             btnEnviarValores.Name = "btnEnviarValores";
             btnEnviarValores.Size = new Size(248, 40);
             btnEnviarValores.TabIndex = 2;
@@ -111,7 +123,7 @@
             // lblEixoX
             // 
             lblEixoX.AutoSize = true;
-            lblEixoX.Location = new Point(85, 216);
+            lblEixoX.Location = new Point(85, 265);
             lblEixoX.Name = "lblEixoX";
             lblEixoX.Size = new Size(14, 15);
             lblEixoX.TabIndex = 3;
@@ -120,7 +132,7 @@
             // lblEixoY
             // 
             lblEixoY.AutoSize = true;
-            lblEixoY.Location = new Point(242, 216);
+            lblEixoY.Location = new Point(242, 265);
             lblEixoY.Name = "lblEixoY";
             lblEixoY.Size = new Size(14, 15);
             lblEixoY.TabIndex = 4;
@@ -129,9 +141,9 @@
             // btnEnviaPoligono
             // 
             btnEnviaPoligono.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
-            btnEnviaPoligono.Location = new Point(3, 330);
+            btnEnviaPoligono.Location = new Point(3, 381);
             btnEnviaPoligono.Name = "btnEnviaPoligono";
-            btnEnviaPoligono.Size = new Size(356, 243);
+            btnEnviaPoligono.Size = new Size(356, 200);
             btnEnviaPoligono.TabIndex = 16;
             btnEnviaPoligono.Text = "Enviar para o Plano";
             btnEnviaPoligono.UseVisualStyleBackColor = true;
@@ -149,9 +161,9 @@
             panel2.Controls.Add(gpAdicionandoValores);
             panel2.Controls.Add(btnEnviaPoligono);
             panel2.Dock = DockStyle.Right;
-            panel2.Location = new Point(627, 0);
+            panel2.Location = new Point(654, 0);
             panel2.Name = "panel2";
-            panel2.Size = new Size(362, 576);
+            panel2.Size = new Size(362, 584);
             panel2.TabIndex = 18;
             // 
             // panel3
@@ -160,14 +172,14 @@
             panel3.Dock = DockStyle.Fill;
             panel3.Location = new Point(0, 0);
             panel3.Name = "panel3";
-            panel3.Size = new Size(627, 576);
+            panel3.Size = new Size(654, 584);
             panel3.TabIndex = 19;
             // 
             // FormPoligonoPersonalizado
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(989, 576);
+            ClientSize = new Size(1016, 584);
             Controls.Add(panel3);
             Controls.Add(panel2);
             Controls.Add(panel1);
@@ -195,5 +207,6 @@
         private Panel panel1;
         private Panel panel2;
         private Panel panel3;
+        private Button btnCarregarCSV;
     }
 }
