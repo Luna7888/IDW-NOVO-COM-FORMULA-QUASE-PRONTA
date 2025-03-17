@@ -27,15 +27,9 @@ namespace IDW
         private double iPIndividual;
         private double dP;
         private double SomatorioNumerador;
-
         private bool temPlanoPersonalizado = false;
 
         private ColorBar _colorBar;
-
-        Ponto PontoA = new(25, 25, 80);
-        Ponto PontoB = new(75, 25, 10);
-        Ponto PontoC = new(75, 75, 10);
-        Ponto PontoD = new(25, 75, 50);
 
         public FormPrincipal()
         {
@@ -203,7 +197,6 @@ namespace IDW
             LiberaObjetosDisabled();
         }
 
-
         //EVENTOS TXB
         private void txbPeso_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -245,15 +238,10 @@ namespace IDW
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    //Get the path of specified file
                     var filePath = openFileDialog.OpenFile();
-
 
                     using (StreamReader sr = new StreamReader(filePath))
                     {
-
-
-                        //talvez apagar o conteudo que esta na lista valores
                         while (!sr.EndOfStream)
                         {
                             string linha = sr.ReadLine(); // lê uma linha do csv
@@ -288,8 +276,6 @@ namespace IDW
             }
             else
             {
-
-
                 valoresAdiconados.Add([Int32.Parse(txbEixoX.Text), Int32.Parse(txbEixoY.Text), Double.Parse(txbIntensidade.Text, CultureInfo.InvariantCulture)]);
 
                 txbEixoX.Text = "";
@@ -303,8 +289,6 @@ namespace IDW
                     indexValoresAdicionados++;
                     PreencheListView(lsvValoresAdicionados, $"Ponto {indexValoresAdicionados}", values[0].ToString(), values[1].ToString(), values[2].ToString());
                 }
-
-
             }
             LiberaBotaoPoligono();
         }
@@ -317,7 +301,6 @@ namespace IDW
             PainelPrincipal.Refresh();
 
             LiberaBotaoPoligono();
-
 
         }
 

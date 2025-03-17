@@ -8,10 +8,9 @@ namespace IDW
     public partial class FormPoligonoPersonalizado : Form
     {
         private FormPrincipal _principal;
-        int TamanhoMapaX = 100;
-        int TamanhoMapaY = 100;
-        private List<double[]> valoresAdiconados = new List<double[]>();
 
+        private List<double[]> valoresAdiconados = new List<double[]>();
+        private List<double[]> valoresConvertidos = new List<double[]>();
         private List<double> PoligonoX_Individual = new List<double> { };
         private List<double> PoligonoY_Individual = new List<double> { };
 
@@ -24,7 +23,7 @@ namespace IDW
             InitializeComponent();
             _principal = principal;
         }
-
+        //VOID
         void GeraPoligono()
         {
             Painel.Plot.Clear();
@@ -66,38 +65,6 @@ namespace IDW
             listview.Items.Add(item);
         }
 
-        private void btnEnviarValores_Click(object sender, EventArgs e)
-        {
-            if (txbEixoX.Text == "" || txbEixoY.Text == "")
-            {
-                MessageBox.Show("Adicione Valores", "Atenção");
-            }
-            else
-            {
-
-                valoresAdiconados.Add([Double.Parse(txbEixoX.Text, CultureInfo.InvariantCulture), Double.Parse(txbEixoY.Text, CultureInfo.InvariantCulture)]);
-                PoligonoX_Individual.Add(Double.Parse(txbEixoX.Text, CultureInfo.InvariantCulture));
-                PoligonoY_Individual.Add(Double.Parse(txbEixoY.Text, CultureInfo.InvariantCulture));
-
-                txbEixoX.Text = "";
-                txbEixoY.Text = "";
-                lsvValoresAdicionados.Items.Clear();
-
-                indexValoresAdicionados = 0;
-                foreach (var values in valoresAdiconados)
-                {
-                    indexValoresAdicionados++;
-                    PreencheListView(lsvValoresAdicionados, $"Ponto {indexValoresAdicionados}", values[0].ToString(), values[1].ToString());
-                }
-
-
-            }
-            GeraPoligono();
-
-            //Deixar nao clicavel antes que a lista tenha no minimo 3
-            LiberaBotaoPoligono();
-        }
-
         private void FormPoligonoPersonalizado_Load(object sender, EventArgs e)
         {
 
@@ -109,12 +76,16 @@ namespace IDW
             LiberaBotaoPoligono();
         }
 
+
+        //EVENTO BTN
         private void btnEnviaPoligono_Click(object sender, EventArgs e)
         {
 
             Close();
             int qnttPontos;
             qnttPontos = PoligonoX_Individual.Count();
+
+            //processo de transformar a forma em um poligono branco
 
             PoligonoX_Individual.Add(0);
             PoligonoX_Individual.Add(PoligonoX_Individual.Max<double>());
@@ -136,7 +107,65 @@ namespace IDW
             _principal.AtualizaPainel();
 
         }
+        private void btnEnviarValores_Click(object sender, EventArgs e)
+        {
+            if (cbUnidadedemedida.SelectedIndex == -1)
+            {
+                MessageBox.Show("Escolha uma unidade de medida", "Atenção");
+                return;
+            }
+            if (txbEixoX.Text == "" || txbEixoY.Text == "")
+            {
+                MessageBox.Show("Adicione Valores", "Atenção");
+                return;
+            }
 
+            valoresAdiconados.Add([Double.Parse(txbEixoX.Text, CultureInfo.InvariantCulture), Double.Parse(txbEixoY.Text, CultureInfo.InvariantCulture)]);
+
+            txbEixoX.Text = "";
+            txbEixoY.Text = "";
+
+            lsvValoresAdicionados.Items.Clear();
+            valoresConvertidos.Clear();
+
+            PoligonoX_Individual.Clear();
+            PoligonoY_Individual.Clear();
+
+            indexValoresAdicionados = 0;
+
+            int PPI = 96;
+            foreach (var values in valoresAdiconados)
+            {
+                indexValoresAdicionados++;
+                PreencheListView(lsvValoresAdicionados, $"Ponto {indexValoresAdicionados}", values[0].ToString(), values[1].ToString());
+
+                if (cbUnidadedemedida.SelectedIndex == 0)
+                {
+                    PoligonoX_Individual.Add(values[0] * (PPI / 2.54));
+                    PoligonoY_Individual.Add(values[1] * (PPI / 2.54));
+                }
+                if (cbUnidadedemedida.SelectedIndex == 1)
+                {
+                    PoligonoX_Individual.Add(values[0] * (PPI / 2.54) / 10);
+                    PoligonoY_Individual.Add(values[1] * (PPI / 2.54) / 10);
+                }
+                if (cbUnidadedemedida.SelectedIndex == 2)
+                {
+                    PoligonoX_Individual.Add(values[0]);
+                    PoligonoY_Individual.Add(values[1]);
+                }
+
+                cbUnidadedemedida.Enabled = false;
+
+            }
+
+            GeraPoligono();
+
+            //Deixar nao clicavel antes que a lista tenha no minimo 3
+            LiberaBotaoPoligono();
+        }
+
+        // EVENTO TXB
         private void txbEixoX_KeyPress(object sender, KeyPressEventArgs e)
         {
             Key.IntNumber_Ponto(e, sender);
@@ -145,11 +174,6 @@ namespace IDW
         private void txbEixoY_KeyPress(object sender, KeyPressEventArgs e)
         {
             Key.IntNumber_Ponto(e, sender);
-        }
-
-        private void panel3_Paint(object sender, PaintEventArgs e)
-        {
-
         }
 
         private void btnCarregarCSV_Click(object sender, EventArgs e)
@@ -174,9 +198,6 @@ namespace IDW
 
                     using (StreamReader sr = new StreamReader(filePath))
                     {
-
-
-                        //talvez apagar o conteudo que esta na lista valores
                         while (!sr.EndOfStream)
                         {
                             string linha = sr.ReadLine(); // lê uma linha do csv

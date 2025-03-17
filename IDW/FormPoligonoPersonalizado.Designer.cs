@@ -30,6 +30,7 @@
         {
             Painel = new ScottPlot.WinForms.FormsPlot();
             gpAdicionandoValores = new GroupBox();
+            cbUnidadedemedida = new ComboBox();
             btnCarregarCSV = new Button();
             lsvValoresAdicionados = new ListView();
             txbEixoX = new TextBox();
@@ -58,6 +59,7 @@
             // 
             // gpAdicionandoValores
             // 
+            gpAdicionandoValores.Controls.Add(cbUnidadedemedida);
             gpAdicionandoValores.Controls.Add(btnCarregarCSV);
             gpAdicionandoValores.Controls.Add(lsvValoresAdicionados);
             gpAdicionandoValores.Controls.Add(txbEixoX);
@@ -68,10 +70,20 @@
             gpAdicionandoValores.Dock = DockStyle.Top;
             gpAdicionandoValores.Location = new Point(0, 0);
             gpAdicionandoValores.Name = "gpAdicionandoValores";
-            gpAdicionandoValores.Size = new Size(362, 375);
+            gpAdicionandoValores.Size = new Size(362, 450);
             gpAdicionandoValores.TabIndex = 15;
             gpAdicionandoValores.TabStop = false;
             gpAdicionandoValores.Text = "Adicionando Valores";
+            // 
+            // cbUnidadedemedida
+            // 
+            cbUnidadedemedida.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbUnidadedemedida.FormattingEnabled = true;
+            cbUnidadedemedida.Items.AddRange(new object[] { "Centimetros", "Milimetros", "Pixel" });
+            cbUnidadedemedida.Location = new Point(9, 29);
+            cbUnidadedemedida.Name = "cbUnidadedemedida";
+            cbUnidadedemedida.Size = new Size(102, 23);
+            cbUnidadedemedida.TabIndex = 16;
             // 
             // btnCarregarCSV
             // 
@@ -141,9 +153,9 @@
             // btnEnviaPoligono
             // 
             btnEnviaPoligono.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
-            btnEnviaPoligono.Location = new Point(3, 381);
+            btnEnviaPoligono.Location = new Point(3, 456);
             btnEnviaPoligono.Name = "btnEnviaPoligono";
-            btnEnviaPoligono.Size = new Size(356, 200);
+            btnEnviaPoligono.Size = new Size(356, 125);
             btnEnviaPoligono.TabIndex = 16;
             btnEnviaPoligono.Text = "Enviar para o Plano";
             btnEnviaPoligono.UseVisualStyleBackColor = true;
@@ -208,5 +220,6 @@
         private Panel panel2;
         private Panel panel3;
         private Button btnCarregarCSV;
+        private ComboBox cbUnidadedemedida;
     }
 }
