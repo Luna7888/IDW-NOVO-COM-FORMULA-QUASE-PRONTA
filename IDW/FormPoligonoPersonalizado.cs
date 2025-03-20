@@ -1,5 +1,4 @@
 ﻿using ScottPlot;
-using ScottPlot.Plottables;
 using System.Globalization;
 
 namespace IDW
@@ -86,9 +85,10 @@ namespace IDW
             qnttPontos = PoligonoX_Individual.Count();
 
             //processo de transformar a forma em um poligono branco
+            // o poligono deve ser feito da esquerda pra direita com esse codigo
 
             PoligonoX_Individual.Add(0);
-            PoligonoX_Individual.Add(PoligonoX_Individual.Max<double>());
+            PoligonoX_Individual.Add(PoligonoX_Individual.Max<double>());     
             PoligonoX_Individual.Add(PoligonoX_Individual.Max<double>());
             PoligonoX_Individual.Add(0);
             PoligonoX_Individual.Add(0);
@@ -186,7 +186,7 @@ namespace IDW
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
                 openFileDialog.InitialDirectory = "c:\\";
-                openFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+                openFileDialog.Filter = "txt files (*.txt)|*.txt|csv files (*.csv)|*.csv";
                 openFileDialog.FilterIndex = 2;
                 openFileDialog.RestoreDirectory = true;
 

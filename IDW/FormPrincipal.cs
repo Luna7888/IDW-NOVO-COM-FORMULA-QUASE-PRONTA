@@ -2,12 +2,7 @@ using ScottPlot;
 using ScottPlot.Colormaps;
 using ScottPlot.Panels;
 using ScottPlot.Plottables;
-using ScottPlot.TickGenerators.Financial;
-using ScottPlot.WinForms;
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.Globalization;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace IDW
 {
@@ -265,14 +260,21 @@ namespace IDW
             }
             CriaPontos();
             CriaGrafico();
+            btnCriarGrafico.Enabled = true;
         }
         private void btnEnviarValores_Click(object sender, EventArgs e)
         {
-
+            int j = Mapa.GetLength(0);
+            int h = Mapa.GetLength(1);
 
             if (txbEixoX.Text == "" || txbEixoY.Text == "" || txbIntensidade.Text == "")
             {
                 MessageBox.Show("Adicione Valores", "Atenção");
+            }
+
+            if (Int32.Parse(txbEixoX.Text) > Mapa.GetLength(0) || Int32.Parse(txbEixoY.Text) > Mapa.GetLength(1))
+            {
+                MessageBox.Show("Valores de X ou Y maiores que o mapa fornecido", "Atenção");
             }
             else
             {

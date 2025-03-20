@@ -195,8 +195,9 @@
             Controls.Add(panel3);
             Controls.Add(panel2);
             Controls.Add(panel1);
+            Cursor = Cursors.SizeNESW;
             Name = "FormPoligonoPersonalizado";
-            Text = "FormPoligonoPersonalizado";
+            Text = "Personalização de Plano";
             Load += FormPoligonoPersonalizado_Load;
             gpAdicionandoValores.ResumeLayout(false);
             gpAdicionandoValores.PerformLayout();

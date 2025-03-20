@@ -1,7 +1,4 @@
-﻿using ScottPlot.Colormaps;
-using ScottPlot.Palettes;
-using ScottPlot.Plottables;
-
+﻿
 namespace IDW
 {
     partial class FormPrincipal
