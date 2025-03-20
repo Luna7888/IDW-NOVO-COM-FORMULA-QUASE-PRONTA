@@ -103,7 +103,7 @@ namespace IDW
             PoligonoY_Individual.Add(PoligonoY_Individual[qnttPontos - 1]);
 
 
-            _principal.GetInfo(PoligonoX_Individual, PoligonoY_Individual);
+            _principal.GetInfo(PoligonoX_Individual, PoligonoY_Individual,cbUnidadedemedida.SelectedIndex);
             _principal.AtualizaPainel();
 
         }

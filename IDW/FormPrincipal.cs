@@ -8,8 +8,6 @@ namespace IDW
 {
     public partial class FormPrincipal : Form
     {
-        int TamanhoMapaX = 100;
-        int TamanhoMapaY = 100;
         private List<double[]> valoresAdiconados = new List<double[]>();
         public List<double> PoligonoX = new List<double>();
         public List<double> PoligonoY = new List<double>();
@@ -23,6 +21,8 @@ namespace IDW
         private double dP;
         private double SomatorioNumerador;
         private bool temPlanoPersonalizado = false;
+        private int unidadeDeMedida;
+        private int PPI = 96;
 
         private ColorBar _colorBar;
 
@@ -68,6 +68,15 @@ namespace IDW
                         Numerador = double.IsInfinity(Numerador) ? 0 : Numerador;
 
                         SomatorioNumerador += Numerador;
+
+                        if(ponto.Y == j)
+                        {
+                            ponto.Y--;
+                        }
+                        if(ponto.X == h)
+                        {
+                            ponto.X--;
+                        }
 
                         Mapa[ponto.Y, ponto.X] = ponto.Intensidade;
                     }
@@ -158,8 +167,9 @@ namespace IDW
         }
 
         //PUBLIC
-        public void GetInfo(List<double> PoliX, List<double> PoliY)
+        public void GetInfo(List<double> PoliX, List<double> PoliY, int Unidade)
         {
+            unidadeDeMedida = Unidade;
             PoligonoX.Clear(); PoligonoY.Clear();
 
             foreach (var poliX in PoliX)
@@ -264,8 +274,6 @@ namespace IDW
         }
         private void btnEnviarValores_Click(object sender, EventArgs e)
         {
-            int j = Mapa.GetLength(0);
-            int h = Mapa.GetLength(1);
 
             if (txbEixoX.Text == "" || txbEixoY.Text == "" || txbIntensidade.Text == "")
             {
@@ -278,7 +286,25 @@ namespace IDW
             }
             else
             {
-                valoresAdiconados.Add([Int32.Parse(txbEixoX.Text), Int32.Parse(txbEixoY.Text), Double.Parse(txbIntensidade.Text, CultureInfo.InvariantCulture)]);
+                double X = Int32.Parse(txbEixoX.Text);
+                double Y = Int32.Parse(txbEixoY.Text);
+
+                if (unidadeDeMedida == 0)
+                {
+                    X = Double.Parse(txbEixoX.Text) * (PPI / 2.54);
+                    Y = Double.Parse(txbEixoY.Text) * (PPI / 2.54);
+                }
+                if (unidadeDeMedida == 1)
+                {
+                    Y = (Double.Parse(txbEixoY.Text) * (PPI / 2.54) / 10);
+                    X = (Double.Parse(txbEixoX.Text) * (PPI / 2.54) / 10);
+                }
+                if (unidadeDeMedida == 2)
+                {
+                    X = Double.Parse(txbEixoX.Text);
+                    Y = Double.Parse(txbEixoY.Text);
+                }
+                valoresAdiconados.Add([(int)X, (int)Y, Double.Parse(txbIntensidade.Text, CultureInfo.InvariantCulture)]);
 
                 txbEixoX.Text = "";
                 txbEixoY.Text = "";
