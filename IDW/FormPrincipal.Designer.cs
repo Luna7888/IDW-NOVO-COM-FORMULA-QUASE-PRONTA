@@ -49,10 +49,13 @@ namespace IDW
             btnCriarGrafico = new Button();
             panel1 = new Panel();
             panel2 = new Panel();
+            statusStrip1 = new StatusStrip();
+            toolStripStatusLabel1 = new ToolStripStatusLabel();
             menuAdicionar.SuspendLayout();
             gpAdicionandoValores.SuspendLayout();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
+            statusStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // menuAdicionar
@@ -114,6 +117,7 @@ namespace IDW
             txbPeso.Name = "txbPeso";
             txbPeso.Size = new Size(97, 23);
             txbPeso.TabIndex = 15;
+            txbPeso.TextAlign = HorizontalAlignment.Center;
             txbPeso.KeyPress += txbPeso_KeyPress;
             // 
             // lblPeso
@@ -132,6 +136,7 @@ namespace IDW
             txbEixoX.Name = "txbEixoX";
             txbEixoX.Size = new Size(94, 23);
             txbEixoX.TabIndex = 10;
+            txbEixoX.TextAlign = HorizontalAlignment.Center;
             txbEixoX.KeyPress += txbEixoX_KeyPress;
             // 
             // txbEixoY
@@ -141,6 +146,7 @@ namespace IDW
             txbEixoY.Name = "txbEixoY";
             txbEixoY.Size = new Size(94, 23);
             txbEixoY.TabIndex = 11;
+            txbEixoY.TextAlign = HorizontalAlignment.Center;
             txbEixoY.KeyPress += txbEixoY_KeyPress;
             // 
             // txbIntensidade
@@ -150,6 +156,7 @@ namespace IDW
             txbIntensidade.Name = "txbIntensidade";
             txbIntensidade.Size = new Size(94, 23);
             txbIntensidade.TabIndex = 12;
+            txbIntensidade.TextAlign = HorizontalAlignment.Center;
             txbIntensidade.KeyPress += txbIntensidade_KeyPress;
             // 
             // btnCarregaCSV
@@ -215,12 +222,12 @@ namespace IDW
             // 
             // PainelPrincipal
             // 
+            PainelPrincipal.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             PainelPrincipal.BackColor = SystemColors.Control;
             PainelPrincipal.DisplayScale = 1F;
-            PainelPrincipal.Dock = DockStyle.Fill;
             PainelPrincipal.Location = new Point(0, 0);
             PainelPrincipal.Name = "PainelPrincipal";
-            PainelPrincipal.Size = new Size(736, 586);
+            PainelPrincipal.Size = new Size(736, 561);
             PainelPrincipal.TabIndex = 1;
             // 
             // btnCriarGrafico
@@ -253,11 +260,27 @@ namespace IDW
             panel2.Size = new Size(736, 586);
             panel2.TabIndex = 19;
             // 
+            // statusStrip1
+            // 
+            statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripStatusLabel1 });
+            statusStrip1.Location = new Point(0, 588);
+            statusStrip1.Name = "statusStrip1";
+            statusStrip1.Size = new Size(736, 22);
+            statusStrip1.TabIndex = 20;
+            statusStrip1.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabel1
+            // 
+            toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            toolStripStatusLabel1.Size = new Size(174, 17);
+            toolStripStatusLabel1.Text = "Aguardando o Envio do Plano...";
+            // 
             // FormPrincipal
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1146, 610);
+            Controls.Add(statusStrip1);
             Controls.Add(panel2);
             Controls.Add(panel1);
             Controls.Add(menuAdicionar);
@@ -271,6 +294,8 @@ namespace IDW
             gpAdicionandoValores.PerformLayout();
             panel1.ResumeLayout(false);
             panel2.ResumeLayout(false);
+            statusStrip1.ResumeLayout(false);
+            statusStrip1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -296,5 +321,7 @@ namespace IDW
         private Button btnCriarGrafico;
         private Panel panel1;
         private Panel panel2;
+        private StatusStrip statusStrip1;
+        private ToolStripStatusLabel toolStripStatusLabel1;
     }
 }

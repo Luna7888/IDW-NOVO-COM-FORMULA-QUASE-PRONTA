@@ -11,8 +11,10 @@ namespace IDW
         private List<double[]> valoresAdiconados = new List<double[]>();
         public List<double> PoligonoX = new List<double>();
         public List<double> PoligonoY = new List<double>();
+        List<double[]> valoresAdicionadosCopia = new List<double[]>();
         private List<Ponto> ListaPonto = new List<Ponto>();
         private double[,] Mapa = new double[100, 100];
+        private int[] MapaCalculado = new int[2];
 
         private int indexValoresAdicionados;
         private double Numerador;
@@ -69,15 +71,6 @@ namespace IDW
 
                         SomatorioNumerador += Numerador;
 
-                        if(ponto.Y == j)
-                        {
-                            ponto.Y--;
-                        }
-                        if(ponto.X == h)
-                        {
-                            ponto.X--;
-                        }
-
                         Mapa[ponto.Y, ponto.X] = ponto.Intensidade;
                     }
 
@@ -90,7 +83,7 @@ namespace IDW
                 }
             }
 
-            if(_colorBar != null)
+            if (_colorBar != null)
             {
                 PainelPrincipal.Plot.Remove(_colorBar);
             }
@@ -108,9 +101,16 @@ namespace IDW
             ListaPonto.Clear();
             foreach (var ponto in valoresAdiconados)
             {
+                if (ponto[0] == Mapa.GetLength(1))
+                {
+                    ponto[0] = Mapa.GetLength(1) - 1;
+                }
+                if (ponto[1] == Mapa.GetLength(0))
+                {
+                    ponto[1] = Mapa.GetLength(0) - 1;  /// ACEHEIII AGORA É SO COLOAR ISSO PRA QUALQUER NUMERO
+                }
                 Ponto novoPonto = new Ponto((int)ponto[0], Math.Abs((int)PoligonoY.Max<double>() - (int)ponto[1]), ponto[2]);
                 ListaPonto.Add(novoPonto);
-
             }
         }
         void CortaPlano()
@@ -170,6 +170,20 @@ namespace IDW
         public void GetInfo(List<double> PoliX, List<double> PoliY, int Unidade)
         {
             unidadeDeMedida = Unidade;
+
+            if (unidadeDeMedida == 0)
+            {
+                toolStripStatusLabel1.Text = "Unidade de Medida: Centimetro";          //atualiza statusStrip
+            }
+            if (unidadeDeMedida == 1)
+            {
+                toolStripStatusLabel1.Text = "Unidade de Medida: Milimetro";
+            }
+            if (unidadeDeMedida == 2)
+            {
+                toolStripStatusLabel1.Text = "Unidade de Medida: Pixel";
+            }
+
             PoligonoX.Clear(); PoligonoY.Clear();
 
             foreach (var poliX in PoliX)
@@ -279,11 +293,6 @@ namespace IDW
             {
                 MessageBox.Show("Adicione Valores", "Atenção");
             }
-
-            if (Int32.Parse(txbEixoX.Text) > Mapa.GetLength(0) || Int32.Parse(txbEixoY.Text) > Mapa.GetLength(1))
-            {
-                MessageBox.Show("Valores de X ou Y maiores que o mapa fornecido", "Atenção");
-            }
             else
             {
                 double X = Int32.Parse(txbEixoX.Text);
@@ -291,19 +300,63 @@ namespace IDW
 
                 if (unidadeDeMedida == 0)
                 {
-                    X = Double.Parse(txbEixoX.Text) * (PPI / 2.54);
-                    Y = Double.Parse(txbEixoY.Text) * (PPI / 2.54);
+
+                    MapaCalculado[0] = (int)Math.Round(Mapa.GetLength(1) / (PPI / 2.54));
+                    MapaCalculado[1] = (int)Math.Round(Mapa.GetLength(0) / (PPI / 2.54));
+
+                    if (Int32.Parse(txbEixoX.Text) > MapaCalculado[0] || Int32.Parse(txbEixoY.Text) > MapaCalculado[1])
+                    {
+                        MessageBox.Show("Valores de X ou Y maiores que o mapa fornecido", "Atenção");
+                        return;
+                    }
+                    else
+                    {
+                        statusStrip1.Text = "Unidade de Medida: Cm";
+                        X = Double.Parse(txbEixoX.Text) * (PPI / 2.54);
+                        Y = Double.Parse(txbEixoY.Text) * (PPI / 2.54);
+                    }
+
+
                 }
                 if (unidadeDeMedida == 1)
                 {
-                    Y = (Double.Parse(txbEixoY.Text) * (PPI / 2.54) / 10);
-                    X = (Double.Parse(txbEixoX.Text) * (PPI / 2.54) / 10);
+                    MapaCalculado[0] = (int)Math.Round(Mapa.GetLength(1) / (PPI / 2.54) * 10);
+                    MapaCalculado[1] = (int)Math.Round(Mapa.GetLength(0) / (PPI / 2.54) * 10);
+
+                    if (Int32.Parse(txbEixoX.Text) > MapaCalculado[0] || Int32.Parse(txbEixoY.Text) > MapaCalculado[1])
+                    {
+                        MessageBox.Show("Valores de X ou Y maiores que o mapa fornecido", "Atenção");
+                        return;
+                    }
+                    else
+                    {
+                        statusStrip1.Text = "Unidade de Medida: Mm";
+                        Y = (Double.Parse(txbEixoY.Text) * (PPI / 2.54) / 10);
+                        X = (Double.Parse(txbEixoX.Text) * (PPI / 2.54) / 10);
+                    }
+
                 }
                 if (unidadeDeMedida == 2)
                 {
-                    X = Double.Parse(txbEixoX.Text);
-                    Y = Double.Parse(txbEixoY.Text);
+
+                    MapaCalculado[0] = Mapa.GetLength(1);
+                    MapaCalculado[1] = Mapa.GetLength(0);
+
+                    if (Int32.Parse(txbEixoX.Text) > MapaCalculado[0] || Int32.Parse(txbEixoY.Text) > MapaCalculado[1])
+                    {
+                        MessageBox.Show("Valores de X ou Y maiores que o mapa fornecido", "Atenção");
+                        return;
+                    }
+                    else
+                    {
+                        statusStrip1.Text = "Unidade de Medida: Px";
+                        X = Double.Parse(txbEixoX.Text);
+                        Y = Double.Parse(txbEixoY.Text);
+                    }
+
                 }
+
+                valoresAdicionadosCopia.Add([Int32.Parse(txbEixoX.Text), Int32.Parse(txbEixoY.Text), Double.Parse(txbIntensidade.Text, CultureInfo.InvariantCulture)]);
                 valoresAdiconados.Add([(int)X, (int)Y, Double.Parse(txbIntensidade.Text, CultureInfo.InvariantCulture)]);
 
                 txbEixoX.Text = "";
@@ -312,7 +365,7 @@ namespace IDW
                 lsvValoresAdicionados.Items.Clear();
 
                 indexValoresAdicionados = 0;
-                foreach (var values in valoresAdiconados)
+                foreach (var values in valoresAdicionadosCopia)
                 {
                     indexValoresAdicionados++;
                     PreencheListView(lsvValoresAdicionados, $"Ponto {indexValoresAdicionados}", values[0].ToString(), values[1].ToString(), values[2].ToString());

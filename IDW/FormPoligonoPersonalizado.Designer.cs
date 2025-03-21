@@ -30,6 +30,8 @@
         {
             Painel = new ScottPlot.WinForms.FormsPlot();
             gpAdicionandoValores = new GroupBox();
+            label1 = new Label();
+            txbPPI = new TextBox();
             cbUnidadedemedida = new ComboBox();
             btnCarregarCSV = new Button();
             lsvValoresAdicionados = new ListView();
@@ -42,23 +44,28 @@
             panel1 = new Panel();
             panel2 = new Panel();
             panel3 = new Panel();
+            statusStrip1 = new StatusStrip();
+            toolStripStatusLabel1 = new ToolStripStatusLabel();
             gpAdicionandoValores.SuspendLayout();
             panel2.SuspendLayout();
             panel3.SuspendLayout();
+            statusStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // Painel
             // 
+            Painel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             Painel.BackColor = SystemColors.Control;
             Painel.DisplayScale = 1F;
-            Painel.Dock = DockStyle.Fill;
             Painel.Location = new Point(0, 0);
             Painel.Name = "Painel";
-            Painel.Size = new Size(654, 584);
+            Painel.Size = new Size(654, 601);
             Painel.TabIndex = 2;
             // 
             // gpAdicionandoValores
             // 
+            gpAdicionandoValores.Controls.Add(label1);
+            gpAdicionandoValores.Controls.Add(txbPPI);
             gpAdicionandoValores.Controls.Add(cbUnidadedemedida);
             gpAdicionandoValores.Controls.Add(btnCarregarCSV);
             gpAdicionandoValores.Controls.Add(lsvValoresAdicionados);
@@ -74,6 +81,25 @@
             gpAdicionandoValores.TabIndex = 15;
             gpAdicionandoValores.TabStop = false;
             gpAdicionandoValores.Text = "Adicionando Valores";
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(164, 334);
+            label1.Name = "label1";
+            label1.Size = new Size(24, 15);
+            label1.TabIndex = 18;
+            label1.Text = "PPI";
+            // 
+            // txbPPI
+            // 
+            txbPPI.BackColor = Color.White;
+            txbPPI.Location = new Point(129, 352);
+            txbPPI.Name = "txbPPI";
+            txbPPI.Size = new Size(100, 23);
+            txbPPI.TabIndex = 17;
+            txbPPI.Text = "96";
+            txbPPI.TextAlign = HorizontalAlignment.Center;
             // 
             // cbUnidadedemedida
             // 
@@ -108,23 +134,25 @@
             // 
             // txbEixoX
             // 
-            txbEixoX.Location = new Point(48, 283);
+            txbEixoX.Location = new Point(53, 284);
             txbEixoX.Name = "txbEixoX";
             txbEixoX.Size = new Size(89, 23);
             txbEixoX.TabIndex = 10;
+            txbEixoX.TextAlign = HorizontalAlignment.Center;
             txbEixoX.KeyPress += txbEixoX_KeyPress;
             // 
             // txbEixoY
             // 
-            txbEixoY.Location = new Point(207, 283);
+            txbEixoY.Location = new Point(212, 284);
             txbEixoY.Name = "txbEixoY";
             txbEixoY.Size = new Size(89, 23);
             txbEixoY.TabIndex = 11;
+            txbEixoY.TextAlign = HorizontalAlignment.Center;
             txbEixoY.KeyPress += txbEixoY_KeyPress;
             // 
             // btnEnviarValores
             // 
-            btnEnviarValores.Location = new Point(48, 312);
+            btnEnviarValores.Location = new Point(53, 391);
             btnEnviarValores.Name = "btnEnviarValores";
             btnEnviarValores.Size = new Size(248, 40);
             btnEnviarValores.TabIndex = 2;
@@ -135,7 +163,7 @@
             // lblEixoX
             // 
             lblEixoX.AutoSize = true;
-            lblEixoX.Location = new Point(85, 265);
+            lblEixoX.Location = new Point(90, 266);
             lblEixoX.Name = "lblEixoX";
             lblEixoX.Size = new Size(14, 15);
             lblEixoX.TabIndex = 3;
@@ -144,7 +172,7 @@
             // lblEixoY
             // 
             lblEixoY.AutoSize = true;
-            lblEixoY.Location = new Point(242, 265);
+            lblEixoY.Location = new Point(247, 266);
             lblEixoY.Name = "lblEixoY";
             lblEixoY.Size = new Size(14, 15);
             lblEixoY.TabIndex = 4;
@@ -155,7 +183,7 @@
             btnEnviaPoligono.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
             btnEnviaPoligono.Location = new Point(3, 456);
             btnEnviaPoligono.Name = "btnEnviaPoligono";
-            btnEnviaPoligono.Size = new Size(356, 125);
+            btnEnviaPoligono.Size = new Size(356, 167);
             btnEnviaPoligono.TabIndex = 16;
             btnEnviaPoligono.Text = "Enviar para o Plano";
             btnEnviaPoligono.UseVisualStyleBackColor = true;
@@ -175,7 +203,7 @@
             panel2.Dock = DockStyle.Right;
             panel2.Location = new Point(654, 0);
             panel2.Name = "panel2";
-            panel2.Size = new Size(362, 584);
+            panel2.Size = new Size(362, 626);
             panel2.TabIndex = 18;
             // 
             // panel3
@@ -184,14 +212,30 @@
             panel3.Dock = DockStyle.Fill;
             panel3.Location = new Point(0, 0);
             panel3.Name = "panel3";
-            panel3.Size = new Size(654, 584);
+            panel3.Size = new Size(654, 626);
             panel3.TabIndex = 19;
+            // 
+            // statusStrip1
+            // 
+            statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripStatusLabel1 });
+            statusStrip1.Location = new Point(0, 604);
+            statusStrip1.Name = "statusStrip1";
+            statusStrip1.Size = new Size(654, 22);
+            statusStrip1.TabIndex = 20;
+            statusStrip1.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabel1
+            // 
+            toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            toolStripStatusLabel1.Size = new Size(207, 17);
+            toolStripStatusLabel1.Text = "Aguardando Conclusão do Desenho...";
             // 
             // FormPoligonoPersonalizado
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1016, 584);
+            ClientSize = new Size(1016, 626);
+            Controls.Add(statusStrip1);
             Controls.Add(panel3);
             Controls.Add(panel2);
             Controls.Add(panel1);
@@ -203,7 +247,10 @@
             gpAdicionandoValores.PerformLayout();
             panel2.ResumeLayout(false);
             panel3.ResumeLayout(false);
+            statusStrip1.ResumeLayout(false);
+            statusStrip1.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -222,5 +269,9 @@
         private Panel panel3;
         private Button btnCarregarCSV;
         private ComboBox cbUnidadedemedida;
+        private StatusStrip statusStrip1;
+        private ToolStripStatusLabel toolStripStatusLabel1;
+        private Label label1;
+        private TextBox txbPPI;
     }
 }

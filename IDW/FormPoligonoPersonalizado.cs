@@ -133,7 +133,7 @@ namespace IDW
 
             indexValoresAdicionados = 0;
 
-            int PPI = 96;
+            int PPI = Int32.Parse(txbPPI.Text);
             foreach (var values in valoresAdiconados)
             {
                 indexValoresAdicionados++;
