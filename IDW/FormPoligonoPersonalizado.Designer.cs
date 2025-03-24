@@ -239,7 +239,7 @@
             Controls.Add(panel3);
             Controls.Add(panel2);
             Controls.Add(panel1);
-            Cursor = Cursors.SizeNESW;
+            Cursor = Cursors.Arrow;
             Name = "FormPoligonoPersonalizado";
             Text = "Personalização de Plano";
             Load += FormPoligonoPersonalizado_Load;

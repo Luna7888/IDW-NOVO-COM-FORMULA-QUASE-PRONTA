@@ -101,16 +101,19 @@ namespace IDW
             ListaPonto.Clear();
             foreach (var ponto in valoresAdiconados)
             {
-                if (ponto[0] == Mapa.GetLength(1))
+                if (ponto[1] == 0)
                 {
-                    ponto[0] = Mapa.GetLength(1) - 1;
+                    Ponto novoPonto = new Ponto((int)ponto[0], Math.Abs((int)(PoligonoY.Max<double>()-1) - (int)ponto[1]), ponto[2]);
+                    ListaPonto.Add(novoPonto);
                 }
-                if (ponto[1] == Mapa.GetLength(0))
+                else
                 {
-                    ponto[1] = Mapa.GetLength(0) - 1;  /// ACEHEIII AGORA É SO COLOAR ISSO PRA QUALQUER NUMERO
+                    Ponto novoPonto = new Ponto((int)ponto[0], Math.Abs((int)(PoligonoY.Max<double>()) - (int)ponto[1]), ponto[2]);
+                    ListaPonto.Add(novoPonto);
                 }
-                Ponto novoPonto = new Ponto((int)ponto[0], Math.Abs((int)(PoligonoY.Max<double>()-1) - (int)ponto[1]), ponto[2]);
-                ListaPonto.Add(novoPonto);
+                
+
+               
             }
         }
         void CortaPlano()
@@ -290,7 +293,9 @@ namespace IDW
             if (txbEixoX.Text == "" || txbEixoY.Text == "" || txbIntensidade.Text == "")
             {
                 MessageBox.Show("Adicione Valores", "Atenção");
+                return;
             }
+
             else
             {
                 double X = Int32.Parse(txbEixoX.Text);
@@ -302,6 +307,12 @@ namespace IDW
                     MapaCalculado[0] = (int)Math.Round(Mapa.GetLength(1) / (PPI / 2.54));
                     MapaCalculado[1] = (int)Math.Round(Mapa.GetLength(0) / (PPI / 2.54));
 
+                    if (Int32.Parse(txbEixoX.Text) >= MapaCalculado[0] || Int32.Parse(txbEixoY.Text) >= MapaCalculado[1])
+                    {
+                        MessageBox.Show($"Os valores de Index de X vão de 0 até {MapaCalculado[0] - 1}\nOs valores de Index de Y vão de 0 até {MapaCalculado[1] - 1}", "Atenção | Limites do Mapa");
+                        return;
+                    }
+
                     if (Int32.Parse(txbEixoX.Text) > MapaCalculado[0] || Int32.Parse(txbEixoY.Text) > MapaCalculado[1])
                     {
                         MessageBox.Show("Valores de X ou Y maiores que o mapa fornecido", "Atenção");
@@ -312,6 +323,7 @@ namespace IDW
                         statusStrip1.Text = "Unidade de Medida: Cm";
                         X = Double.Parse(txbEixoX.Text) * (PPI / 2.54);
                         Y = Double.Parse(txbEixoY.Text) * (PPI / 2.54);
+
                     }
 
 
@@ -320,6 +332,12 @@ namespace IDW
                 {
                     MapaCalculado[0] = (int)Math.Round(Mapa.GetLength(1) / (PPI / 2.54) * 10);
                     MapaCalculado[1] = (int)Math.Round(Mapa.GetLength(0) / (PPI / 2.54) * 10);
+
+                    if (Int32.Parse(txbEixoX.Text) >= MapaCalculado[0] || Int32.Parse(txbEixoY.Text) >= MapaCalculado[1])
+                    {
+                        MessageBox.Show($"Os valores de Index de X vão de 0 até {MapaCalculado[0] - 1}\nOs valores de Index de Y vão de 0 até {MapaCalculado[1] - 1}", "Atenção | Limites do Mapa");
+                        return;
+                    }
 
                     if (Int32.Parse(txbEixoX.Text) > MapaCalculado[0] || Int32.Parse(txbEixoY.Text) > MapaCalculado[1])
                     {
@@ -331,6 +349,7 @@ namespace IDW
                         statusStrip1.Text = "Unidade de Medida: Mm";
                         Y = (Double.Parse(txbEixoY.Text) * (PPI / 2.54) / 10);
                         X = (Double.Parse(txbEixoX.Text) * (PPI / 2.54) / 10);
+
                     }
 
                 }
@@ -339,6 +358,12 @@ namespace IDW
 
                     MapaCalculado[0] = Mapa.GetLength(1);
                     MapaCalculado[1] = Mapa.GetLength(0);
+
+                    if (Int32.Parse(txbEixoX.Text) >= MapaCalculado[0] || Int32.Parse(txbEixoY.Text) >= MapaCalculado[1])
+                    {
+                        MessageBox.Show($"Os valores de Index de X vão de 0 até {MapaCalculado[0] - 1}\nOs valores de Index de Y vão de 0 até {MapaCalculado[1] - 1}", "Atenção | Limites do Mapa");
+                        return;
+                    }
 
                     if (Int32.Parse(txbEixoX.Text) > MapaCalculado[0] || Int32.Parse(txbEixoY.Text) > MapaCalculado[1])
                     {

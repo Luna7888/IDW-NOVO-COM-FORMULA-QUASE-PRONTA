@@ -1,5 +1,7 @@
 ﻿using ScottPlot;
+using System;
 using System.Globalization;
+using static OpenTK.Graphics.OpenGL.GL;
 
 namespace IDW
 {
@@ -12,6 +14,8 @@ namespace IDW
         private List<double[]> valoresConvertidos = new List<double[]>();
         private List<double> PoligonoX_Individual = new List<double> { };
         private List<double> PoligonoY_Individual = new List<double> { };
+
+        private List<double> indices = new List<double>();
 
         private double[,] Mapa = new double[100, 100];
 
@@ -83,9 +87,6 @@ namespace IDW
             Close();
             int qnttPontos;
             qnttPontos = PoligonoX_Individual.Count();
-
-            //processo de transformar a forma em um poligono branco
-            // o poligono deve ser feito da esquerda pra direita com esse codigo
 
             PoligonoX_Individual.Add(0);
             PoligonoX_Individual.Add(PoligonoX_Individual.Max<double>());     
