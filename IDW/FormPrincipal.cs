@@ -44,12 +44,12 @@ namespace IDW
         }
         void Interpolate(double[,] mapa, List<Ponto> listaponto)
         {
-            int j = mapa.GetLength(0);
-            int h = mapa.GetLength(1);
-            //Organizando  formula para ter valores nao pré definidos
-            for (int y = 0; y < j; y++)
+            int altura = mapa.GetLength(0);
+            int largura = mapa.GetLength(1);
+            
+            for (int y = 0; y < altura; y++)
             {
-                for (int x = 0; x < h; x++)
+                for (int x = 0; x < largura; x++)
                 {
                     foreach (var ponto in listaponto)
                     {
@@ -109,7 +109,7 @@ namespace IDW
                 {
                     ponto[1] = Mapa.GetLength(0) - 1;  /// ACEHEIII AGORA É SO COLOAR ISSO PRA QUALQUER NUMERO
                 }
-                Ponto novoPonto = new Ponto((int)ponto[0], Math.Abs((int)PoligonoY.Max<double>() - (int)ponto[1]), ponto[2]);
+                Ponto novoPonto = new Ponto((int)ponto[0], Math.Abs((int)(PoligonoY.Max<double>()-1) - (int)ponto[1]), ponto[2]);
                 ListaPonto.Add(novoPonto);
             }
         }
@@ -154,9 +154,8 @@ namespace IDW
             {
                 Mapa = new double[100, 100];
             }
-            Interpolate(Mapa, ListaPonto);
 
-            //interpolar2(Mapa,PontoA,  PontoB,  PontoC, PontoD);
+            Interpolate(Mapa, ListaPonto);
 
             PainelPrincipal.Refresh();
         }
@@ -197,7 +196,6 @@ namespace IDW
         }
         public void AtualizaPainel()
         {
-            //PainelPrincipal.Plot.Clear();
             if (PoligonoX.Count > 0)
             {
                 Mapa = new double[(int)Math.Round(PoligonoY.Max<double>()), (int)Math.Round(PoligonoX.Max<double>())];
@@ -219,7 +217,7 @@ namespace IDW
         //EVENTOS TXB
         private void txbPeso_KeyPress(object sender, KeyPressEventArgs e)
         {
-            Key.IntNumber_Ponto(e, sender);
+            Key.IntNumber_Ponto(e, sender);  // Classe Key nao permite letras nas txb 
         }
         private void txbEixoX_KeyPress(object sender, KeyPressEventArgs e)
         {
