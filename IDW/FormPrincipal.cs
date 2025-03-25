@@ -211,6 +211,16 @@ namespace IDW
             p.LineColor = Colors.White;
             p.FillColor = Colors.White;
 
+
+            var yAxis2 = PainelPrincipal.Plot.Axes.AddLeftAxis();
+
+            // add a new plottable and tell it to use the custom Y axis
+            var sig2 = PainelPrincipal.Plot.Add.Signal(Generate.Cos(51, mult: 100));       //double[]
+            sig2.Axes.XAxis = PainelPrincipal.Plot.Axes.Bottom; // standard X axis
+            sig2.Axes.YAxis = yAxis2; // custom Y axis
+            yAxis2.LabelText = "Secondary Y Axis";
+
+
             PainelPrincipal.Refresh();
             resetaListViewPrincipal();
 
