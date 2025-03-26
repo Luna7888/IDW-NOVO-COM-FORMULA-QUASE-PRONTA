@@ -34,6 +34,7 @@ namespace IDW
             planoToolStripMenuItem = new ToolStripMenuItem();
             personalizadoToolStripMenuItem = new ToolStripMenuItem();
             gpAdicionandoValores = new GroupBox();
+            lblEscala = new Label();
             txbPeso = new TextBox();
             lblPeso = new Label();
             txbEixoX = new TextBox();
@@ -51,7 +52,6 @@ namespace IDW
             panel2 = new Panel();
             statusStrip1 = new StatusStrip();
             toolStripStatusLabel1 = new ToolStripStatusLabel();
-            label1 = new Label();
             menuAdicionar.SuspendLayout();
             gpAdicionandoValores.SuspendLayout();
             panel1.SuspendLayout();
@@ -91,7 +91,7 @@ namespace IDW
             // 
             // gpAdicionandoValores
             // 
-            gpAdicionandoValores.Controls.Add(label1);
+            gpAdicionandoValores.Controls.Add(lblEscala);
             gpAdicionandoValores.Controls.Add(txbPeso);
             gpAdicionandoValores.Controls.Add(lblPeso);
             gpAdicionandoValores.Controls.Add(txbEixoX);
@@ -110,6 +110,16 @@ namespace IDW
             gpAdicionandoValores.TabIndex = 14;
             gpAdicionandoValores.TabStop = false;
             gpAdicionandoValores.Text = "Adicionando Valores";
+            // 
+            // lblEscala
+            // 
+            lblEscala.AutoSize = true;
+            lblEscala.Font = new Font("Sitka Small", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblEscala.Location = new Point(21, 29);
+            lblEscala.Name = "lblEscala";
+            lblEscala.Size = new Size(54, 18);
+            lblEscala.TabIndex = 17;
+            lblEscala.Text = "Escala:";
             // 
             // txbPeso
             // 
@@ -277,16 +287,6 @@ namespace IDW
             toolStripStatusLabel1.Size = new Size(174, 17);
             toolStripStatusLabel1.Text = "Aguardando o Envio do Plano...";
             // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Sitka Small", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(21, 29);
-            label1.Name = "label1";
-            label1.Size = new Size(49, 18);
-            label1.TabIndex = 17;
-            label1.Text = "Escala";
-            // 
             // FormPrincipal
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -335,6 +335,6 @@ namespace IDW
         private Panel panel2;
         private StatusStrip statusStrip1;
         private ToolStripStatusLabel toolStripStatusLabel1;
-        private Label label1;
+        private Label lblEscala;
     }
 }

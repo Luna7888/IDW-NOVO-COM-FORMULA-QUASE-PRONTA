@@ -1,7 +1,9 @@
 using ScottPlot;
+using ScottPlot.AxisPanels;
 using ScottPlot.Colormaps;
 using ScottPlot.Panels;
 using ScottPlot.Plottables;
+using System.Diagnostics;
 using System.Globalization;
 
 namespace IDW
@@ -22,9 +24,8 @@ namespace IDW
         private double iPIndividual;
         private double dP;
         private double SomatorioNumerador;
-        private bool temPlanoPersonalizado = false;
         private int unidadeDeMedida;
-        private int PPI = 96;
+        public int PPI = 96;
 
         private ColorBar _colorBar;
 
@@ -111,9 +112,6 @@ namespace IDW
                     Ponto novoPonto = new Ponto((int)ponto[0], Math.Abs((int)(PoligonoY.Max<double>()) - (int)ponto[1]), ponto[2]);
                     ListaPonto.Add(novoPonto);
                 }
-                
-
-               
             }
         }
         void CortaPlano()
@@ -211,20 +209,28 @@ namespace IDW
             p.LineColor = Colors.White;
             p.FillColor = Colors.White;
 
-
-            var yAxis2 = PainelPrincipal.Plot.Axes.AddLeftAxis();
-
-            // add a new plottable and tell it to use the custom Y axis
-            var sig2 = PainelPrincipal.Plot.Add.Signal(Generate.Cos(51, mult: 100));       //double[]
-            sig2.Axes.XAxis = PainelPrincipal.Plot.Axes.Bottom; // standard X axis
-            sig2.Axes.YAxis = yAxis2; // custom Y axis
-            yAxis2.LabelText = "Secondary Y Axis";
-
+            toolStripStatusLabel1.Text = "Aguardando Envio de Valores";
+            
+            PainelPrincipal.Plot.Axes.AutoScale();
 
             PainelPrincipal.Refresh();
+
             resetaListViewPrincipal();
 
             LiberaObjetosDisabled();
+
+            if (unidadeDeMedida == 0)
+            {
+                lblEscala.Text = $"Escala: 1cm  :  {(PPI / 2.54):F2}px";
+            }
+            if (unidadeDeMedida == 1)
+            {
+                lblEscala.Text = $"Escala: 1mm  :  {((PPI / 2.54) / 10):F2}px";
+            }
+            if (unidadeDeMedida == 2)
+            {
+                lblEscala.Text = $"Escala: 1px  :  1px";
+            }
         }
 
         //EVENTOS TXB
@@ -336,7 +342,6 @@ namespace IDW
 
                     }
 
-
                 }
                 if (unidadeDeMedida == 1)
                 {
@@ -416,6 +421,9 @@ namespace IDW
 
             LiberaBotaoPoligono();
 
+            PainelPrincipal.Refresh();
+
+            PainelPrincipal.Plot.Axes.SquareUnits();
         }
 
         //Menu Bar

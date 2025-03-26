@@ -25,15 +25,12 @@ namespace IDW
         {
             InitializeComponent();
             _principal = principal;
+            cbUnidadedemedida.SelectedIndex = 2;
         }
         //VOID
         void GeraPoligono()
         {
             Painel.Plot.Clear();
-
-
-            double[] xs = { 1, 50, 100, 100, 0 };
-            double[] ys = { 1, 100, 0, 100, 100 };
 
             for (int i = 0; i < indexValoresAdicionados; i++)
             {
@@ -76,6 +73,8 @@ namespace IDW
             lsvValoresAdicionados.Columns.Add("X", 111, System.Windows.Forms.HorizontalAlignment.Center);
             lsvValoresAdicionados.Columns.Add("Y", 111, System.Windows.Forms.HorizontalAlignment.Center);
 
+            Painel.Plot.Axes.SquareUnits();
+
             LiberaBotaoPoligono();
         }
 
@@ -84,12 +83,11 @@ namespace IDW
         private void btnEnviaPoligono_Click(object sender, EventArgs e)
         {
 
-            Close();
             int qnttPontos;
             qnttPontos = PoligonoX_Individual.Count();
 
             PoligonoX_Individual.Add(0);
-            PoligonoX_Individual.Add(PoligonoX_Individual.Max<double>());     
+            PoligonoX_Individual.Add(PoligonoX_Individual.Max<double>());
             PoligonoX_Individual.Add(PoligonoX_Individual.Max<double>());
             PoligonoX_Individual.Add(0);
             PoligonoX_Individual.Add(0);
@@ -104,9 +102,11 @@ namespace IDW
             PoligonoY_Individual.Add(PoligonoY_Individual[qnttPontos - 1]);
 
 
-            _principal.GetInfo(PoligonoX_Individual, PoligonoY_Individual,cbUnidadedemedida.SelectedIndex);
+            _principal.GetInfo(PoligonoX_Individual, PoligonoY_Individual, cbUnidadedemedida.SelectedIndex);
             _principal.AtualizaPainel();
+            _principal.PPI = Int32.Parse(txbPPI.Text);
 
+            Close();
         }
         private void btnEnviarValores_Click(object sender, EventArgs e)
         {
@@ -119,6 +119,19 @@ namespace IDW
             {
                 MessageBox.Show("Adicione Valores", "Atenção");
                 return;
+            }
+
+            if (cbUnidadedemedida.SelectedIndex == 0)
+            {
+                lblEscala.Text = $"Escala: 1cm  :  {(Int32.Parse(txbPPI.Text) / 2.54):F2}px";
+            }
+            if (cbUnidadedemedida.SelectedIndex == 1)
+            {
+                lblEscala.Text = $"Escala: 1mm  :  {((Int32.Parse(txbPPI.Text) / 2.54) / 10):F2}px";
+            }
+            if (cbUnidadedemedida.SelectedIndex == 2)
+            {
+                lblEscala.Text = $"Escala: 1px  :  1px";
             }
 
             valoresAdiconados.Add([Double.Parse(txbEixoX.Text, CultureInfo.InvariantCulture), Double.Parse(txbEixoY.Text, CultureInfo.InvariantCulture)]);
@@ -135,6 +148,8 @@ namespace IDW
             indexValoresAdicionados = 0;
 
             int PPI = Int32.Parse(txbPPI.Text);
+            txbPPI.Enabled = false;
+
             foreach (var values in valoresAdiconados)
             {
                 indexValoresAdicionados++;
@@ -159,6 +174,8 @@ namespace IDW
                 cbUnidadedemedida.Enabled = false;
 
             }
+
+            Painel.Plot.Axes.AutoScale();
 
             GeraPoligono();
 
@@ -226,5 +243,9 @@ namespace IDW
             LiberaBotaoPoligono();
         }
 
+        private void gpAdicionandoValores_Enter(object sender, EventArgs e)
+        {
+
+        }
     }
 }

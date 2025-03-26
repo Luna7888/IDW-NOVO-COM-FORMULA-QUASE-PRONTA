@@ -30,6 +30,7 @@
         {
             Painel = new ScottPlot.WinForms.FormsPlot();
             gpAdicionandoValores = new GroupBox();
+            lblEscala = new Label();
             label1 = new Label();
             txbPPI = new TextBox();
             cbUnidadedemedida = new ComboBox();
@@ -59,11 +60,12 @@
             Painel.DisplayScale = 1F;
             Painel.Location = new Point(0, 0);
             Painel.Name = "Painel";
-            Painel.Size = new Size(654, 601);
+            Painel.Size = new Size(738, 601);
             Painel.TabIndex = 2;
             // 
             // gpAdicionandoValores
             // 
+            gpAdicionandoValores.Controls.Add(lblEscala);
             gpAdicionandoValores.Controls.Add(label1);
             gpAdicionandoValores.Controls.Add(txbPPI);
             gpAdicionandoValores.Controls.Add(cbUnidadedemedida);
@@ -77,15 +79,26 @@
             gpAdicionandoValores.Dock = DockStyle.Top;
             gpAdicionandoValores.Location = new Point(0, 0);
             gpAdicionandoValores.Name = "gpAdicionandoValores";
-            gpAdicionandoValores.Size = new Size(362, 450);
+            gpAdicionandoValores.Size = new Size(403, 450);
             gpAdicionandoValores.TabIndex = 15;
             gpAdicionandoValores.TabStop = false;
             gpAdicionandoValores.Text = "Adicionando Valores";
+            gpAdicionandoValores.Enter += gpAdicionandoValores_Enter;
+            // 
+            // lblEscala
+            // 
+            lblEscala.AutoSize = true;
+            lblEscala.Font = new Font("Sitka Small", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblEscala.Location = new Point(6, 32);
+            lblEscala.Name = "lblEscala";
+            lblEscala.Size = new Size(54, 18);
+            lblEscala.TabIndex = 19;
+            lblEscala.Text = "Escala:";
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(164, 334);
+            label1.Location = new Point(186, 336);
             label1.Name = "label1";
             label1.Size = new Size(24, 15);
             label1.TabIndex = 18;
@@ -94,7 +107,7 @@
             // txbPPI
             // 
             txbPPI.BackColor = Color.White;
-            txbPPI.Location = new Point(129, 352);
+            txbPPI.Location = new Point(151, 354);
             txbPPI.Name = "txbPPI";
             txbPPI.Size = new Size(100, 23);
             txbPPI.TabIndex = 17;
@@ -106,14 +119,14 @@
             cbUnidadedemedida.DropDownStyle = ComboBoxStyle.DropDownList;
             cbUnidadedemedida.FormattingEnabled = true;
             cbUnidadedemedida.Items.AddRange(new object[] { "Centimetros", "Milimetros", "Pixel" });
-            cbUnidadedemedida.Location = new Point(9, 29);
+            cbUnidadedemedida.Location = new Point(156, 31);
             cbUnidadedemedida.Name = "cbUnidadedemedida";
             cbUnidadedemedida.Size = new Size(102, 23);
             cbUnidadedemedida.TabIndex = 16;
             // 
             // btnCarregarCSV
             // 
-            btnCarregarCSV.Location = new Point(257, 22);
+            btnCarregarCSV.Location = new Point(279, 32);
             btnCarregarCSV.Name = "btnCarregarCSV";
             btnCarregarCSV.Size = new Size(86, 23);
             btnCarregarCSV.TabIndex = 15;
@@ -125,7 +138,7 @@
             // 
             lsvValoresAdicionados.GridLines = true;
             lsvValoresAdicionados.LabelEdit = true;
-            lsvValoresAdicionados.Location = new Point(8, 58);
+            lsvValoresAdicionados.Location = new Point(30, 60);
             lsvValoresAdicionados.Name = "lsvValoresAdicionados";
             lsvValoresAdicionados.Size = new Size(335, 189);
             lsvValoresAdicionados.TabIndex = 14;
@@ -134,7 +147,7 @@
             // 
             // txbEixoX
             // 
-            txbEixoX.Location = new Point(53, 284);
+            txbEixoX.Location = new Point(75, 286);
             txbEixoX.Name = "txbEixoX";
             txbEixoX.Size = new Size(89, 23);
             txbEixoX.TabIndex = 10;
@@ -143,7 +156,7 @@
             // 
             // txbEixoY
             // 
-            txbEixoY.Location = new Point(212, 284);
+            txbEixoY.Location = new Point(234, 286);
             txbEixoY.Name = "txbEixoY";
             txbEixoY.Size = new Size(89, 23);
             txbEixoY.TabIndex = 11;
@@ -152,18 +165,18 @@
             // 
             // btnEnviarValores
             // 
-            btnEnviarValores.Location = new Point(53, 391);
+            btnEnviarValores.Location = new Point(75, 393);
             btnEnviarValores.Name = "btnEnviarValores";
             btnEnviarValores.Size = new Size(248, 40);
             btnEnviarValores.TabIndex = 2;
-            btnEnviarValores.Text = "Enviar";
+            btnEnviarValores.Text = "Enviar Ponto";
             btnEnviarValores.UseVisualStyleBackColor = true;
             btnEnviarValores.Click += btnEnviarValores_Click;
             // 
             // lblEixoX
             // 
             lblEixoX.AutoSize = true;
-            lblEixoX.Location = new Point(90, 266);
+            lblEixoX.Location = new Point(112, 268);
             lblEixoX.Name = "lblEixoX";
             lblEixoX.Size = new Size(14, 15);
             lblEixoX.TabIndex = 3;
@@ -172,7 +185,7 @@
             // lblEixoY
             // 
             lblEixoY.AutoSize = true;
-            lblEixoY.Location = new Point(247, 266);
+            lblEixoY.Location = new Point(269, 268);
             lblEixoY.Name = "lblEixoY";
             lblEixoY.Size = new Size(14, 15);
             lblEixoY.TabIndex = 4;
@@ -180,10 +193,10 @@
             // 
             // btnEnviaPoligono
             // 
-            btnEnviaPoligono.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
-            btnEnviaPoligono.Location = new Point(3, 456);
+            btnEnviaPoligono.Anchor = AnchorStyles.None;
+            btnEnviaPoligono.Location = new Point(0, 456);
             btnEnviaPoligono.Name = "btnEnviaPoligono";
-            btnEnviaPoligono.Size = new Size(356, 167);
+            btnEnviaPoligono.Size = new Size(400, 167);
             btnEnviaPoligono.TabIndex = 16;
             btnEnviaPoligono.Text = "Enviar para o Plano";
             btnEnviaPoligono.UseVisualStyleBackColor = true;
@@ -201,9 +214,9 @@
             panel2.Controls.Add(gpAdicionandoValores);
             panel2.Controls.Add(btnEnviaPoligono);
             panel2.Dock = DockStyle.Right;
-            panel2.Location = new Point(654, 0);
+            panel2.Location = new Point(738, 0);
             panel2.Name = "panel2";
-            panel2.Size = new Size(362, 626);
+            panel2.Size = new Size(403, 626);
             panel2.TabIndex = 18;
             // 
             // panel3
@@ -212,7 +225,7 @@
             panel3.Dock = DockStyle.Fill;
             panel3.Location = new Point(0, 0);
             panel3.Name = "panel3";
-            panel3.Size = new Size(654, 626);
+            panel3.Size = new Size(738, 626);
             panel3.TabIndex = 19;
             // 
             // statusStrip1
@@ -220,7 +233,7 @@
             statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripStatusLabel1 });
             statusStrip1.Location = new Point(0, 604);
             statusStrip1.Name = "statusStrip1";
-            statusStrip1.Size = new Size(654, 22);
+            statusStrip1.Size = new Size(738, 22);
             statusStrip1.TabIndex = 20;
             statusStrip1.Text = "statusStrip1";
             // 
@@ -234,12 +247,11 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1016, 626);
+            ClientSize = new Size(1141, 626);
             Controls.Add(statusStrip1);
             Controls.Add(panel3);
             Controls.Add(panel2);
             Controls.Add(panel1);
-            Cursor = Cursors.Arrow;
             Name = "FormPoligonoPersonalizado";
             Text = "Personalização de Plano";
             Load += FormPoligonoPersonalizado_Load;
@@ -273,5 +285,6 @@
         private ToolStripStatusLabel toolStripStatusLabel1;
         private Label label1;
         private TextBox txbPPI;
+        private Label lblEscala;
     }
 }
