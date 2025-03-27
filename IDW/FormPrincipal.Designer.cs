@@ -34,6 +34,7 @@ namespace IDW
             planoToolStripMenuItem = new ToolStripMenuItem();
             personalizadoToolStripMenuItem = new ToolStripMenuItem();
             gpAdicionandoValores = new GroupBox();
+            txbEscala = new TextBox();
             lblEscala = new Label();
             txbPeso = new TextBox();
             lblPeso = new Label();
@@ -91,6 +92,7 @@ namespace IDW
             // 
             // gpAdicionandoValores
             // 
+            gpAdicionandoValores.Controls.Add(txbEscala);
             gpAdicionandoValores.Controls.Add(lblEscala);
             gpAdicionandoValores.Controls.Add(txbPeso);
             gpAdicionandoValores.Controls.Add(lblPeso);
@@ -111,20 +113,30 @@ namespace IDW
             gpAdicionandoValores.TabStop = false;
             gpAdicionandoValores.Text = "Adicionando Valores";
             // 
+            // txbEscala
+            // 
+            txbEscala.Enabled = false;
+            txbEscala.Location = new Point(22, 406);
+            txbEscala.Name = "txbEscala";
+            txbEscala.Size = new Size(94, 23);
+            txbEscala.TabIndex = 18;
+            txbEscala.Text = "1";
+            txbEscala.TextAlign = HorizontalAlignment.Center;
+            txbEscala.TextChanged += txbEscala_TextChanged;
+            // 
             // lblEscala
             // 
             lblEscala.AutoSize = true;
-            lblEscala.Font = new Font("Sitka Small", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblEscala.Location = new Point(21, 29);
+            lblEscala.Location = new Point(27, 388);
             lblEscala.Name = "lblEscala";
-            lblEscala.Size = new Size(54, 18);
+            lblEscala.Size = new Size(84, 15);
             lblEscala.TabIndex = 17;
-            lblEscala.Text = "Escala:";
+            lblEscala.Text = "Valor da Escala";
             // 
             // txbPeso
             // 
             txbPeso.Enabled = false;
-            txbPeso.Location = new Point(147, 374);
+            txbPeso.Location = new Point(288, 406);
             txbPeso.MaximumSize = new Size(1000, 0);
             txbPeso.Name = "txbPeso";
             txbPeso.Size = new Size(97, 23);
@@ -135,7 +147,7 @@ namespace IDW
             // lblPeso
             // 
             lblPeso.AutoSize = true;
-            lblPeso.Location = new Point(175, 356);
+            lblPeso.Location = new Point(321, 388);
             lblPeso.Name = "lblPeso";
             lblPeso.Size = new Size(35, 15);
             lblPeso.TabIndex = 16;
@@ -336,5 +348,6 @@ namespace IDW
         private StatusStrip statusStrip1;
         private ToolStripStatusLabel toolStripStatusLabel1;
         private Label lblEscala;
+        private TextBox txbEscala;
     }
 }

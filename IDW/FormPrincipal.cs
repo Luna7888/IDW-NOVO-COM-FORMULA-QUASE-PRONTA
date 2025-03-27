@@ -28,6 +28,7 @@ namespace IDW
         public int PPI = 96;
 
         private ColorBar _colorBar;
+        private ScaleBar _scaleBar;
 
         public FormPrincipal()
         {
@@ -47,7 +48,7 @@ namespace IDW
         {
             int altura = mapa.GetLength(0);
             int largura = mapa.GetLength(1);
-            
+
             for (int y = 0; y < altura; y++)
             {
                 for (int x = 0; x < largura; x++)
@@ -104,7 +105,7 @@ namespace IDW
             {
                 if (ponto[1] == 0)
                 {
-                    Ponto novoPonto = new Ponto((int)ponto[0], Math.Abs((int)(PoligonoY.Max<double>()-1) - (int)ponto[1]), ponto[2]);
+                    Ponto novoPonto = new Ponto((int)ponto[0], Math.Abs((int)(PoligonoY.Max<double>() - 1) - (int)ponto[1]), ponto[2]);
                     ListaPonto.Add(novoPonto);
                 }
                 else
@@ -142,6 +143,7 @@ namespace IDW
             txbEixoY.Enabled = true;
             txbIntensidade.Enabled = true;
             txbPeso.Enabled = true;
+            txbEscala.Enabled = true;
         }
         void CriaGrafico()
         {
@@ -210,7 +212,7 @@ namespace IDW
             p.FillColor = Colors.White;
 
             toolStripStatusLabel1.Text = "Aguardando Envio de Valores";
-            
+
             PainelPrincipal.Plot.Axes.AutoScale();
 
             PainelPrincipal.Refresh();
@@ -219,17 +221,28 @@ namespace IDW
 
             LiberaObjetosDisabled();
 
+            if (_scaleBar != null)
+            {
+                PainelPrincipal.Plot.Remove(_scaleBar);
+            }
+
             if (unidadeDeMedida == 0)
             {
-                lblEscala.Text = $"Escala: 1cm  :  {(PPI / 2.54):F2}px";
+
+                _scaleBar = PainelPrincipal.Plot.Add.ScaleBar(double.Parse(txbEscala.Text) * PPI / 2.54, 0);
+                _scaleBar.XLabel = $"{txbEscala.Text}cm";
             }
             if (unidadeDeMedida == 1)
             {
-                lblEscala.Text = $"Escala: 1mm  :  {((PPI / 2.54) / 10):F2}px";
+
+                _scaleBar = PainelPrincipal.Plot.Add.ScaleBar(double.Parse(txbEscala.Text) * (PPI / 2.54) / 10, 0);
+                _scaleBar.XLabel = $"{txbEscala.Text}mm";
             }
             if (unidadeDeMedida == 2)
             {
-                lblEscala.Text = $"Escala: 1px  :  1px";
+
+                _scaleBar = PainelPrincipal.Plot.Add.ScaleBar(double.Parse(txbEscala.Text), 0);
+                _scaleBar.XLabel = $"{txbEscala.Text}px";
             }
         }
 
@@ -432,6 +445,34 @@ namespace IDW
             FormPoligonoPersonalizado FormPersonalizadoInstancia = new(this);
 
             FormPersonalizadoInstancia.Show();
+        }
+
+        //TXB EVENTS
+
+        private void txbEscala_TextChanged(object sender, EventArgs e)
+        {
+            if (_scaleBar != null)
+            {
+                PainelPrincipal.Plot.Remove(_scaleBar);
+            }
+            if (unidadeDeMedida == 0)
+            {
+
+                _scaleBar = PainelPrincipal.Plot.Add.ScaleBar(double.Parse(txbEscala.Text) * PPI / 2.54, 0);
+                _scaleBar.XLabel = $"{txbEscala.Text}cm";
+            }
+            if (unidadeDeMedida == 1)
+            {
+
+                _scaleBar = PainelPrincipal.Plot.Add.ScaleBar(double.Parse(txbEscala.Text) * (PPI / 2.54) / 10, 0);
+                _scaleBar.XLabel = $"{txbEscala.Text}mm";
+            }
+            if (unidadeDeMedida == 2)
+            {
+
+                _scaleBar = PainelPrincipal.Plot.Add.ScaleBar(double.Parse(txbEscala.Text), 0);
+                _scaleBar.XLabel = $"{txbEscala.Text}px";
+            }
         }
 
     }
