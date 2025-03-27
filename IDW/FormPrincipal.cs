@@ -458,14 +458,17 @@ namespace IDW
             if (unidadeDeMedida == 0)
             {
 
-                _scaleBar = PainelPrincipal.Plot.Add.ScaleBar(double.Parse(txbEscala.Text) * PPI / 2.54, 0);
+                _scaleBar = PainelPrincipal.Plot.Add.ScaleBar((double.Parse(txbEscala.Text) * PPI / 2.54) - 1, 0);
                 _scaleBar.XLabel = $"{txbEscala.Text}cm";
             }
             if (unidadeDeMedida == 1)
             {
+                if(txbEscala.Text != "")
+                {
+                    _scaleBar = PainelPrincipal.Plot.Add.ScaleBar((double.Parse(txbEscala.Text) * (PPI / 2.54) / 10) - 1, 0);
+                    _scaleBar.XLabel = $"{txbEscala.Text}mm";
+                }
 
-                _scaleBar = PainelPrincipal.Plot.Add.ScaleBar(double.Parse(txbEscala.Text) * (PPI / 2.54) / 10, 0);
-                _scaleBar.XLabel = $"{txbEscala.Text}mm";
             }
             if (unidadeDeMedida == 2)
             {

@@ -141,6 +141,7 @@ namespace IDW
             txbPeso.Name = "txbPeso";
             txbPeso.Size = new Size(97, 23);
             txbPeso.TabIndex = 15;
+            txbPeso.Text = "1";
             txbPeso.TextAlign = HorizontalAlignment.Center;
             txbPeso.KeyPress += txbPeso_KeyPress;
             // 
@@ -149,9 +150,9 @@ namespace IDW
             lblPeso.AutoSize = true;
             lblPeso.Location = new Point(321, 388);
             lblPeso.Name = "lblPeso";
-            lblPeso.Size = new Size(35, 15);
+            lblPeso.Size = new Size(32, 15);
             lblPeso.TabIndex = 16;
-            lblPeso.Text = "Peso:";
+            lblPeso.Text = "Peso";
             // 
             // txbEixoX
             // 

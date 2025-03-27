@@ -196,10 +196,6 @@ namespace IDW
 
         private void btnCarregarCSV_Click(object sender, EventArgs e)
         {
-            valoresAdiconados.Clear();
-            PoligonoX_Individual.Clear();
-            PoligonoY_Individual.Clear();
-            resetaListViewPrincipal();
 
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
@@ -216,6 +212,10 @@ namespace IDW
 
                     using (StreamReader sr = new StreamReader(filePath))
                     {
+                        valoresAdiconados.Clear();
+                        PoligonoX_Individual.Clear();
+                        PoligonoY_Individual.Clear();
+                        resetaListViewPrincipal();
                         while (!sr.EndOfStream)
                         {
                             string linha = sr.ReadLine(); // lê uma linha do csv
